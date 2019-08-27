@@ -1,0 +1,22 @@
+// full rounded
+
+button,
+.btn {
+	outline: none;
+	border-radius: 10px;
+	border: 1px solid $blue-grey-light;
+	padding: 4px 10px;
+	text-transform: uppercase;
+	background-color: $blue-grey;
+	color: $blue-grey-very-dark;
+	cursor: pointer;
+
+	&:focus {
+		box-shadow: 0 0 2px 2px $blue-grey-very-dark;
+	}
+
+	&:disabled {
+		opacity: 0.5;
+	}
+
+}

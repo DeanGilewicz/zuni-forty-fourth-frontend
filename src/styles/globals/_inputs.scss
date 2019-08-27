@@ -1,0 +1,40 @@
+// full rounded
+
+input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+	outline: none;
+	height: 30px;
+	border-radius: 10px;
+	border: 1px solid $blue-grey-light;
+	padding: 4px 8px;
+	background-color: $white-off;
+	color: $blue-grey-very-dark;
+
+	&:focus {
+		box-shadow: 0 0 2px 2px $blue-grey-very-dark;
+	}
+}
+
+input[type="submit"] {
+	padding: 4px 10px;
+	background-color: $blue-grey;
+	color: $blue-grey-very-dark;
+}
+
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	appearance: none;
+	outline: 0;
+	box-shadow: none;
+	background-image: none;
+
+	// Remove IE arrow
+	&::-ms-expand {
+		display: none;
+	}
+}

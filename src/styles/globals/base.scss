@@ -1,0 +1,172 @@
+@import "./_variables";
+@import "./typography";
+@import "./messages";
+@import "./inputs";
+@import "./buttons";
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	position: relative;
+	min-height: 100%;
+	font-size: 0.875em; // 14px
+	line-height: 1;
+	font-family: $font-stack-body;
+	background-color: $blue-grey-dark;
+	color: $blue-grey-light;
+
+	@media only screen and (min-width: $mobile-landscape) {
+	}
+
+	@media only screen and (min-width: $tablet) {
+		font-size: 1em; // 16px
+	}
+
+	@media only screen and (min-width: $desktop) {
+		font-size: 1.125em; // 18px
+	}
+
+	@media only screen and (min-width: $desktop-large) {
+	}
+
+	&.no-scroll {
+		overflow: hidden;
+	}
+}
+
+img {
+	max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
+	font-family: $font-stack-heading;
+	text-transform: uppercase;
+	color: $blue-grey-light;
+}
+
+main {
+	max-width: $container;
+	margin: 0 auto;
+	padding: 20px 10px;
+
+	@media only screen and (min-width: $mobile-landscape) {
+		padding: 22px 12px;
+	}
+
+	@media only screen and (min-width: $tablet) {
+		padding: 26px 16px;
+	}
+
+	@media only screen and (min-width: $desktop) {
+		padding: 30px 20px;
+	}
+
+	@media only screen and (min-width: $desktop-large) {
+		padding: 34px 24px;
+	}
+}
+
+.container-logo {
+	.logo {
+		width: 174px;
+		margin: 0 auto;
+		font-size: 16px;
+		letter-spacing: 4px;
+		text-align: center;
+
+		@media only screen and (min-width: $tablet) {
+			width: 218px;
+			font-size: 20px;
+			letter-spacing: 5px;
+		}
+
+		@media only screen and (min-width: $desktop) {
+			width: 312px;
+			font-size: 32px;
+			letter-spacing: 5px;
+		}
+
+		&.small {
+			width: 136px;
+			font-size: 14px;
+			letter-spacing: 2px;
+
+			@media only screen and (min-width: $tablet) {
+				width: 174px;
+				font-size: 16px;
+				letter-spacing: 4px;
+			}
+
+			@media only screen and (min-width: $desktop) {
+				width: 230px;
+				font-size: 20px;
+				letter-spacing: 6px;
+			}
+		}
+
+		span {
+			display: block;
+			font-size: 60px;
+			letter-spacing: 12px;
+
+			@media only screen and (min-width: $tablet) {
+				font-size: 76px;
+				letter-spacing: 13px;
+			}
+
+			@media only screen and (min-width: $desktop) {
+				font-size: 113px;
+				letter-spacing: 16px;
+			}
+
+			&.small {
+				font-size: 43px;
+				letter-spacing: 12px;
+
+				@media only screen and (min-width: $tablet) {
+					font-size: 56px;
+					letter-spacing: 14px;
+				}
+
+				@media only screen and (min-width: $desktop) {
+					font-size: 78px;
+					letter-spacing: 15px;
+				}
+			}
+		}
+	}
+}
+
+a {
+	color: $yellow;
+
+	&:active,
+	&:focus {
+		color: $yellow-dark;
+	}
+
+	&.router-link-active {
+		color: $blue-grey-very-dark;
+		font-weight: 600;
+	}
+}
+
+// datetime library
+
+.vdatetime input.vdatetime-input {
+	width: 100%;
+}

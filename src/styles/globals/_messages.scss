@@ -1,0 +1,35 @@
+.system-messages {
+	position: fixed;
+	bottom: 10px;
+	right: 0;
+
+	.close {
+		outline: none;
+    border: none;
+		background-color: transparent;
+		color: $white-off;
+		cursor: pointer;
+
+		&:active,
+		&:focus {
+			box-shadow: none;
+		}
+	}
+	
+	.system-message {
+		display: flex;
+		align-items: flex-end;
+		border-radius: 10px 0 0 10px;
+		padding: 14px 20px 20px 20px;
+
+		&.alert-danger {
+			background-color: $alert-message;
+		}
+
+		&.alert-success {
+			background-color: $success-message;
+		}
+	
+	}
+
+}
