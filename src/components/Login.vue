@@ -2,14 +2,14 @@
   <div>
     <form action="/api/login" method="post" @submit.prevent="logUserIn">
       <div class="field">
-        <input v-model="emailAddress" type="email" id="emailLogin" name="email_address" />
+        <input v-model="emailAddress" type="email" id="emailLogin" name="email_address" required />
         <label for="emailLogin" :class="{ active: isFilledEmail }">
           Email Address
           <sup>*</sup>
         </label>
       </div>
       <div class="field">
-        <input v-model="password" type="password" id="passwordLogin" name="password" />
+        <input v-model="password" type="password" id="passwordLogin" name="password" required />
         <label for="passwordLogin" :class="{ active: isFilledPassword }">
           Password
           <sup>*</sup>

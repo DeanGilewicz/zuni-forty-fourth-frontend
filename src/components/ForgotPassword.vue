@@ -6,28 +6,28 @@
       @submit.prevent="forgotPasswordConfirmationModal"
     >
       <div class="field">
-        <input v-model="firstName" type="text" id="firstName" name="first_name" />
+        <input v-model="firstName" type="text" id="firstName" name="first_name" required />
         <label for="firstName" :class="{ active: isFilledFirstName }">
           First Name
           <sup>*</sup>
         </label>
       </div>
       <div class="field">
-        <input v-model="lastName" type="text" id="lastName" name="last_name" />
+        <input v-model="lastName" type="text" id="lastName" name="last_name" required />
         <label for="lastName" :class="{ active: isFilledLastName }">
           Last Name
           <sup>*</sup>
         </label>
       </div>
       <div class="field">
-        <input v-model="emailAddress" type="email" id="emailAddress" name="email_address" />
+        <input v-model="emailAddress" type="email" id="emailAddress" name="email_address" required />
         <label for="emailAddress" :class="{ active: isFilledEmail }">
           Email Address
           <sup>*</sup>
         </label>
       </div>
       <div class="field custom-select">
-        <select v-model="propertyId" id="property" name="property_id">
+        <select v-model="propertyId" id="property" name="property_id" required>
           <option value></option>
           <option
             v-for="property in properties"

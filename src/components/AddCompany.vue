@@ -9,7 +9,7 @@
         class="form__company"
       >
         <div class="field">
-          <select v-model="type" id="cType" name="cType">
+          <select v-model="type" id="cType" name="cType" required>
             <option value></option>
             <option value="electrical">Electrical</option>
             <option value="builder">Builder</option>
@@ -22,49 +22,49 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="name" type="text" id="cName" name="cName" />
+          <input v-model="name" type="text" id="cName" name="cName" required />
           <label for="cName" :class="{ active: isCompanyName }">
             Company Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="email" type="email" id="cEmail" name="cEmail" />
+          <input v-model="email" type="email" id="cEmail" name="cEmail" required />
           <label for="cEmail" :class="{ active: isCompanyEmail }">
             Email Address
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="contactNumber" type="tel" id="cNumber" name="cNumber" />
+          <input v-model="contactNumber" type="tel" id="cNumber" name="cNumber" required />
           <label for="cNumber" :class="{ active: isCompanyNumber }">
             Contact Number
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="website" type="text" id="cWebsite" name="cWebsite" />
+          <input v-model="website" type="text" id="cWebsite" name="cWebsite" required />
           <label for="cWebsite" :class="{ active: isCompanyWebsite }">
             Company Website
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="address" type="text" id="cAddress" name="cAddress" />
+          <input v-model="address" type="text" id="cAddress" name="cAddress" required />
           <label for="cAddress" :class="{ active: isCompanyAddress }">
             Address
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="city" type="text" id="cCity" name="cCity" />
+          <input v-model="city" type="text" id="cCity" name="cCity" required />
           <label for="cCity" :class="{ active: isCompanyCity }">
             City
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <select v-model="state" type="text" id="cState" name="cState">
+          <select v-model="state" type="text" id="cState" name="cState" required>
             <option value></option>
             <option value="CO">Colorado</option>
           </select>
@@ -74,7 +74,7 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="zipCode" type="text" id="cZipCode" name="cZipCode" />
+          <input v-model="zipCode" type="text" id="cZipCode" name="cZipCode" required />
           <label for="cZipCode" :class="{ active: isCompanyZip }">
             Zip
             <sup>*</sup>

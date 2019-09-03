@@ -4,14 +4,14 @@
     <div class="container-form">
       <form action method="post" @submit.prevent="addEventConfirmationModal" class="form__event">
         <div class="field">
-          <input v-model="name" type="text" id="eName" name="name" />
+          <input v-model="name" type="text" id="eName" name="name" required />
           <label for="eName" :class="{ active: isEventName }">
             Event Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="cost" type="text" id="cost" name="cost" />
+          <input v-model="cost" type="text" id="cost" name="cost" required />
           <label for="cost" :class="{ active: isEventCost }">
             Cost
             <sup>*</sup>
@@ -32,28 +32,28 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="address" type="text" id="address" name="address" />
+          <input v-model="address" type="text" id="address" name="address" required />
           <label for="address" :class="{ active: isEventAddress }">
             Address
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="city" type="text" id="city" name="city" />
+          <input v-model="city" type="text" id="city" name="city" required />
           <label for="city" :class="{ active: isEventCity }">
             City
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="state" type="text" id="state" name="state" />
+          <input v-model="state" type="text" id="state" name="state" required />
           <label for="state" :class="{ active: isEventState }">
             State
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="zipCode" type="text" id="zipCode" name="zipCode" />
+          <input v-model="zipCode" type="text" id="zipCode" name="zipCode" required />
           <label for="zipCode" :class="{ active: isEventZip }">
             Zip
             <sup>*</sup>

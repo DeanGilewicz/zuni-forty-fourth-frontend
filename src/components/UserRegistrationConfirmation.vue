@@ -19,21 +19,33 @@
             class="form__registration-user"
           >
             <div class="field">
-              <input v-model="emailAddress" type="email" id="emailAddress" name="email_address" />
+              <input
+                v-model="emailAddress"
+                type="email"
+                id="emailAddress"
+                name="email_address"
+                required
+              />
               <label for="emailAddress" :class="{ active: isEmail }">
                 Email Address
                 <sup>*</sup>
               </label>
             </div>
             <div class="field">
-              <input v-model="verifyCode" type="text" id="verifyCode" name="verify_code" />
+              <input v-model="verifyCode" type="text" id="verifyCode" name="verify_code" required />
               <label for="verifyCode" :class="{ active: isVerifyCode }">
                 Verification Code
                 <sup>*</sup>
               </label>
             </div>
             <div class="field">
-              <input v-model="tempPassword" type="password" id="tempPassword" name="tempPassword" />
+              <input
+                v-model="tempPassword"
+                type="password"
+                id="tempPassword"
+                name="tempPassword"
+                required
+              />
               <label for="tempPassword" :class="{ active: isTempPassword }">
                 Temp Password
                 <sup>*</sup>

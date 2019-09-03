@@ -15,6 +15,7 @@
             type="password"
             id="currentPassword"
             name="current_password"
+            required
           />
           <label for="currentPassword" :class="{ active: isCurrentPassword }">
             Current Password
@@ -22,7 +23,13 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="newPassword" type="password" id="newPassword" name="new_password" />
+          <input
+            v-model="newPassword"
+            type="password"
+            id="newPassword"
+            name="new_password"
+            required
+          />
           <label for="newPassword" :class="{ active: isNewPassword }">
             New Password
             <sup>*</sup>
@@ -34,6 +41,7 @@
             type="password"
             id="confirmPassword"
             name="confirm_password"
+            required
           />
           <label for="confirmPassword" :class="{ active: isConfirmPassword }">
             Verify Password

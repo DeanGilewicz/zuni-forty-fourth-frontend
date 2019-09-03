@@ -9,21 +9,27 @@
         class="form__edit-user"
       >
         <div class="field">
-          <input v-model="user.firstName" type="text" id="fname" name="first_name" />
+          <input v-model="user.firstName" type="text" id="fname" name="first_name" required />
           <label for="fname" :class="{ active: isFirstName }">
             First Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="user.lastName" type="text" id="lname" name="last_name" />
+          <input v-model="user.lastName" type="text" id="lname" name="last_name" required />
           <label for="lname" :class="{ active: isLastName }">
             Last Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="user.phoneNumber" type="tel" id="phoneNumber" name="phone_number" />
+          <input
+            v-model="user.phoneNumber"
+            type="tel"
+            id="phoneNumber"
+            name="phone_number"
+            required
+          />
           <label for="phoneNumber" :class="{ active: isPhoneNumber }">
             Phone Number
             <sup>*</sup>

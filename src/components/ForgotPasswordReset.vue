@@ -19,21 +19,33 @@
             class="form__password-reset"
           >
             <div class="field">
-              <input v-model="emailAddress" type="email" id="emailAddress" name="email_address" />
+              <input
+                v-model="emailAddress"
+                type="email"
+                id="emailAddress"
+                name="email_address"
+                required
+              />
               <label for="emailAddress" :class="{ active: isEmail }">
                 Email Address
                 <sup>*</sup>
               </label>
             </div>
             <div class="field">
-              <input v-model="verifyCode" type="text" id="verifyCode" name="verify_code" />
+              <input v-model="verifyCode" type="text" id="verifyCode" name="verify_code" required />
               <label for="verifyCode" :class="{ active: isVerifyCode }">
                 Reset Code
                 <sup>*</sup>
               </label>
             </div>
             <div class="field">
-              <input v-model="newPassword" type="password" id="newPassword" name="new_password" />
+              <input
+                v-model="newPassword"
+                type="password"
+                id="newPassword"
+                name="new_password"
+                required
+              />
               <label for="newPassword" :class="{ active: isNewPassword }">
                 New Password
                 <sup>*</sup>
@@ -45,6 +57,7 @@
                 type="password"
                 id="confirmPassword"
                 name="confirm_password"
+                required
               />
               <label for="confirmPassword" :class="{ active: isConfirmPassword }">
                 Confirm Password

@@ -9,21 +9,21 @@
         class="form__add-owner"
       >
         <div class="field">
-          <input v-model="firstName" type="text" id="fname" name="first_name" />
+          <input v-model="firstName" type="text" id="fname" name="first_name" required />
           <label for="fname" :class="{ active: isFirstName }">
             First Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="lastName" type="text" id="lname" name="last_name" />
+          <input v-model="lastName" type="text" id="lname" name="last_name" required />
           <label for="lname" :class="{ active: isLastName }">
             Last Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <select v-model="propertyId" id="property" name="property_id">
+          <select v-model="propertyId" id="property" name="property_id" required>
             <option value></option>
             <option
               v-for="property in properties"
@@ -37,7 +37,7 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="emailAddress" type="email" id="email" name="email_address" />
+          <input v-model="emailAddress" type="email" id="email" name="email_address" required />
           <label for="email" :class="{ active: isEmail }">
             Email Address
             <sup>*</sup>
