@@ -1,2 +1,4 @@
+# Netlify settings for proxy
+/api/*	https://zuni-forty-fourth-api.herokuapp.com/api/:splat  200
 # Netlify settings for single-page application
-/*    /index.html   200
+/*			/index.html   200
