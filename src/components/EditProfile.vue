@@ -16,12 +16,12 @@
               v-if="this.selectedFilePreview"
               class="image"
               :style="`background-image: url('${selectedFilePreview}')`"
-            />
+            ></div>
             <div
               v-else
               class="image"
               :style="`background-image: url('${user.image || 'https://res.cloudinary.com/cloudassets/image/upload/v1565501442/zuni44/profile-placeholder.png'}')`"
-            />
+            ></div>
           </div>
           <div class="container-image-trigger">
             <input
@@ -384,7 +384,7 @@ h2 {
 
 .container-image-save {
   @media only screen and (min-width: $tablet) {
-    flex-basis: 220px;
+    flex-basis: 180px;
   }
 }
 

@@ -5,7 +5,10 @@
     <router-link class="a-link last-link" to="/app/profile/change-password">Change Password</router-link>
     <div v-if="user" class="current__user">
       <div class="container-image">
-        <img :src="user.image" alt="profile" class="image" />
+        <div
+          class="image"
+          :style="`background-image: url('${user.image || 'https://res.cloudinary.com/cloudassets/image/upload/v1565501442/zuni44/profile-placeholder.png'}')`"
+        ></div>
       </div>
       <p>
         <span>Name :</span>
@@ -102,7 +105,7 @@ h2 {
 
   @media only screen and (min-width: $tablet) {
     max-width: none;
-    margin: 0;
+    margin: 0 3% 40px;
   }
 
   p {
@@ -115,13 +118,27 @@ h2 {
 }
 
 .container-image {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 20px;
+  width: 100px;
+  height: 100px;
   border-radius: 10px;
 
-  .image {
-    border-radius: 10px;
+  @media only screen and (min-width: $tablet) {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+
+  @media only screen and (min-width: $tablet) {
+    width: 120px;
+    height: 120px;
   }
 }
 </style>
