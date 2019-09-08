@@ -22,9 +22,11 @@ ul {
   padding: 10px 30px 0 0;
   font-size: 0.9rem;
 }
+
 li {
   line-height: 1.5;
 }
+
 button {
   align-self: flex-start;
   border: none;

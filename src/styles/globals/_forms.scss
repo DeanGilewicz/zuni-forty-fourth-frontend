@@ -29,7 +29,22 @@ form {
 				margin-top: 15px;
 				margin-bottom: 15px;
 			}
+
+			.btn {
+				width: 100%;
+				font-size: 1em;
+
+				@media only screen and (min-width: $tablet) {
+					font-size: 0.9em;
+				}
+
+				@media only screen and (min-width: $desktop) {
+					font-size: 0.9em;
+				}
+			}
+
 		}
+
 	}
 
 	label {
@@ -53,6 +68,7 @@ form {
 
 	input:focus + label,
 	input + label.active,
+	select:focus + label,
 	select + label.active,
 	.vdatetime + label.active {
 		transform: translate(0, 0);

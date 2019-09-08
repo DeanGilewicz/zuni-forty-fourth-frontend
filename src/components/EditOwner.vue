@@ -257,6 +257,13 @@ h2 {
   margin-top: 10px;
 }
 
+h2:last-of-type {
+  margin-top: 20px;
+  @media only screen and (min-width: $tablet) {
+    margin-top: 40px;
+  }
+}
+
 .form__edit-owner,
 .form__change-owner {
   @media only screen and (min-width: $tablet) {

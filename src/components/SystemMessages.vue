@@ -182,6 +182,7 @@ export default {
 .fade-leave-active {
   transition: opacity 0.4s;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;

@@ -175,4 +175,12 @@ export default {
     flex-wrap: wrap;
   }
 }
+form {
+  .field.submit {
+    @media only screen and (min-width: $tablet) {
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+  }
+}
 </style>

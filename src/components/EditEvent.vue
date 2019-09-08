@@ -213,24 +213,12 @@ export default {
     flex-wrap: wrap;
   }
 }
-
-.field.submit {
-  @media only screen and (min-width: $tablet) {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-.btn {
-  width: 100%;
-  font-size: 1em;
-
-  @media only screen and (min-width: $tablet) {
-    font-size: 0.9em;
-  }
-
-  @media only screen and (min-width: $desktop) {
-    font-size: 0.9em;
+form {
+  .field.submit {
+    @media only screen and (min-width: $tablet) {
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
   }
 }
 </style>

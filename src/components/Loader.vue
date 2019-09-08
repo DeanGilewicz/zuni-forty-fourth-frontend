@@ -50,20 +50,24 @@ export default {
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
+
 .loader:before,
 .loader:after {
   content: "";
   position: absolute;
   top: 0;
 }
+
 .loader:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
+
 .loader:after {
   left: 3.5em;
 }
+
 @-webkit-keyframes loader {
   0%,
   80%,
@@ -74,6 +78,7 @@ export default {
     box-shadow: 0 2.5em 0 0;
   }
 }
+
 @keyframes loader {
   0%,
   80%,

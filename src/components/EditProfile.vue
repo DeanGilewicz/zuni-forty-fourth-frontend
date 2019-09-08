@@ -392,17 +392,4 @@ export default {
 .image-clear {
   cursor: pointer;
 }
-
-.btn {
-  width: 100%;
-  font-size: 1em;
-
-  @media only screen and (min-width: $tablet) {
-    font-size: 0.9em;
-  }
-
-  @media only screen and (min-width: $desktop) {
-    font-size: 0.9em;
-  }
-}
 </style>

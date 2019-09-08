@@ -152,11 +152,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+form {
+  .field.submit {
+    @media only screen and (min-width: $tablet) {
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+  }
+}
+
 .field {
-  display: flex;
-  flex-direction: column-reverse;
-  margin-top: 15px;
-  margin-bottom: 15px;
 
   &.custom-select {
     position: relative;
@@ -173,51 +178,8 @@ export default {
       pointer-events: none;
       color: $blue-grey-very-dark;
     }
+
   }
 
-  &.submit {
-    margin-top: 35px;
-    margin-bottom: 35px;
-  }
-}
-
-label {
-  align-self: start;
-  margin-bottom: 4px;
-  font-size: 0.9em;
-  color: $blue-grey-placeholder;
-  transform: translate(10px, 24px);
-  transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
-  pointer-events: none;
-
-  @media only screen and (min-width: $tablet) {
-    font-size: 0.8em;
-    transform: translate(10px, 25px);
-  }
-
-  @media only screen and (min-width: $desktop) {
-    font-size: 0.7em;
-    transform: translate(10px, 26px);
-  }
-}
-input:focus + label,
-input + label.active,
-select:focus + label,
-select + label.active {
-  transform: translate(0, 0);
-  color: $blue-grey;
-}
-
-.btn {
-  width: 100%;
-  font-size: 1em;
-
-  @media only screen and (min-width: $tablet) {
-    font-size: 0.9em;
-  }
-
-  @media only screen and (min-width: $desktop) {
-    font-size: 0.9em;
-  }
 }
 </style>
