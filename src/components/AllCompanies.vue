@@ -48,18 +48,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h2 {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  text-align: center;
-
-  @media only screen and (min-width: $tablet) {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-}
-
 .container-companies {
   list-style-type: none;
   margin: 0;

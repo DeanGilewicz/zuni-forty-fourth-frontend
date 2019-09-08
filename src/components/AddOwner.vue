@@ -169,78 +169,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h2 {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  text-align: center;
-
-  @media only screen and (min-width: $tablet) {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-}
-
-.container-form {
-  max-width: 400px;
-  margin: 0 auto;
-
-  @media only screen and (min-width: $tablet) {
-    max-width: 800px;
-  }
-}
-
 .form__add-owner {
   @media only screen and (min-width: $tablet) {
     display: flex;
     flex-wrap: wrap;
   }
-}
-
-.field {
-  display: flex;
-  flex-direction: column-reverse;
-  margin-top: 15px;
-  margin-bottom: 15px;
-
-  @media only screen and (min-width: $tablet) {
-    flex-basis: 44%;
-    margin-left: 3%;
-    margin-right: 3%;
-  }
-
-  &.submit {
-    margin-top: 35px;
-    margin-bottom: 35px;
-
-    @media only screen and (min-width: $tablet) {
-    }
-  }
-}
-
-label {
-  margin-bottom: 4px;
-  font-size: 0.9em;
-  transform: translate(10px, 24px);
-  color: $blue-grey-placeholder;
-  transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
-  pointer-events: none;
-
-  @media only screen and (min-width: $tablet) {
-    font-size: 0.8em;
-    transform: translate(10px, 25px);
-  }
-
-  @media only screen and (min-width: $desktop) {
-    font-size: 0.7em;
-    transform: translate(10px, 26px);
-  }
-}
-
-input:focus + label,
-input + label.active,
-select + label.active {
-  transform: translate(0, 0);
-  color: $blue-grey;
 }
 </style>
