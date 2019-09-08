@@ -11,7 +11,10 @@
           <ul v-if="property.users" class="container-details">
             <li v-for="user in property.users" :key="user.id" class="details">
               <div class="container-image-profile">
-                <img :src="user.image" alt="profile" class="image" />
+                <div
+                  class="image"
+                  :style="`background-image: url('${cloudinaryOptimizedImage(user.image)}')`"
+                ></div>
               </div>
               <h4>{{user.firstName}} {{user.lastName}}</h4>
               <p @click="onUserProfileModal(user)">...</p>
@@ -28,7 +31,10 @@
           </div>
           <div class="modal-wrapper">
             <div class="modal-image">
-              <img :src="modalUser.image" alt="proile" class="image" />
+              <div
+                class="image"
+                :style="`background-image: url('${cloudinaryOptimizedImage(modalUser.image)}')`"
+              ></div>
             </div>
             <div class="modal-details">
               <h5>{{modalUser.firstName}} {{modalUser.lastName}}</h5>
@@ -109,6 +115,17 @@ export default {
       if (this.bodyEl) this.bodyEl.classList.remove("no-scroll");
       // reset modal user
       this.modalUser = null;
+    },
+    cloudinaryOptimizedImage(image) {
+      if( image ) {
+        const cloudinaryUploadUrl = "https://res.cloudinary.com/cloudassets/image/upload/";
+        let optimizedUrl = image.split(cloudinaryUploadUrl);
+        // add cloudinary optimizations
+        optimizedUrl[0] = cloudinaryUploadUrl + "q_auto,f_auto/";
+        return optimizedUrl.join('');
+      } else {
+        return "https://res.cloudinary.com/cloudassets/image/upload/q_auto,f_auto/v1565501442/zuni44/profile-placeholder.png";
+      }
     }
   },
   components: {}
@@ -197,13 +214,35 @@ h2 {
   }
 }
 
-.container-image-profile {
-  max-width: 120px;
+.container-image-profile,
+.modal-image {
+  width: 100px;
+  height: 100px;
   margin: 0 auto;
+  border-radius: 10px;
+
+  @media only screen and (min-width: $tablet) {
+    width: 120px;
+    height: 120px;
+  }
 
   .image {
+    width: 100px;
+    height: 100px;
     border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+
+    @media only screen and (min-width: $tablet) {
+      width: 120px;
+      height: 120px;
+    }
   }
+}
+
+.modal-image {
+  margin: 0;
 }
 
 h3 {
@@ -308,20 +347,6 @@ ul {
       @media only screen and (min-width: $tablet) {
         font-size: 1.1rem;
       }
-    }
-  }
-
-  .modal-image {
-    max-width: 100px;
-    margin: 0 auto;
-
-    @media only screen and (min-width: $tablet) {
-      max-width: 120px;
-      margin: 0;
-    }
-
-    .image {
-      border-radius: 10px;
     }
   }
 

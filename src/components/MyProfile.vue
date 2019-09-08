@@ -7,7 +7,7 @@
       <div class="container-image">
         <div
           class="image"
-          :style="`background-image: url('${user.image || 'https://res.cloudinary.com/cloudassets/image/upload/v1565501442/zuni44/profile-placeholder.png'}')`"
+          :style="`background-image: url('${cloudinaryOptimizedImage}')`"
         ></div>
       </div>
       <p>
@@ -61,6 +61,19 @@ export default {
         this.user = response.data.result;
       })
       .catch(error => HandleError(error));
+  },
+  computed: {
+    cloudinaryOptimizedImage() {
+      if( this.user.image ) {
+        const cloudinaryUploadUrl = "https://res.cloudinary.com/cloudassets/image/upload/";
+        let optimizedUrl = this.user.image.split(cloudinaryUploadUrl);
+        // add cloudinary optimizations
+        optimizedUrl[0] = cloudinaryUploadUrl + "q_auto,f_auto/";
+        return optimizedUrl.join('');
+      } else {
+        return "https://res.cloudinary.com/cloudassets/image/upload/q_auto,f_auto/v1565501442/zuni44/profile-placeholder.png";
+      }
+    }
   },
   methods: {
     phoneNumberFormatted(phoneNumber) {
