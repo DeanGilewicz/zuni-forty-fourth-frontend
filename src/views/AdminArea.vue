@@ -5,7 +5,11 @@
       @click="showAllProperties"
       class="btn-link"
     >All Properties</button>
-    <button v-if="showComponent !== 'showAddOwner'" @click="showAddOwner" class="btn-link">Add Owner</button>
+    <button
+      v-if="showComponent !== 'showAddOwner'"
+      @click="showAddOwner"
+      class="btn-link"
+    >Add Owner</button>
     <button
       v-if="showComponent !== 'showAddUser'"
       @click="showAddUser"
@@ -19,7 +23,7 @@
       @deleteUser="deleteUserConfirmationModal"
       :properties="properties"
     />
-    <AddOwner v-if="showComponent === 'showAddOwner'" />
+    <AddOwner v-if="showComponent === 'showAddOwner'" @addOwner="addOwner" />
     <EditOwner
       v-if="showComponent === 'showEditOwner'"
       :userId="userId"
@@ -96,6 +100,16 @@ export default {
       EventBus.$emit("RESET_ERRORS_MESSAGES_MODAL");
       this.showComponent = "showAddUser";
     },
+    addOwner(addedOwner, thePropertyId) {
+      if (this.properties.length === 0) {
+        return;
+      }
+      const propertyIndex = this.properties.findIndex(
+        property => property.id === thePropertyId
+      );
+      /* polyfill needed for updatedProperty fn to work in IE */
+      this.properties[propertyIndex].users.push(addedOwner);
+    },
     editOwner(userId, propertyId) {
       EventBus.$emit("RESET_ERRORS_MESSAGES_MODAL");
       this.userId = userId;
@@ -121,11 +135,9 @@ export default {
         axios
           .post(url, axiosData, axiosConfig)
           .then(response => {
-            console.log("RESPONSE", response);
             const deletedOwnerId = response.data.result.id;
             let propertyIndex;
             this.properties.forEach((property, propIndex) => {
-              console.log("PROPERTY", property);
               if (property.ownerId === ownerId) {
                 propertyIndex = propIndex;
               }

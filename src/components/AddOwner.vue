@@ -158,6 +158,8 @@ export default {
         .then(response => {
           // clear vue form
           this.resetForm();
+          // emit event to update ui when going back to all properties view
+          this.$emit("addOwner", response.data.result, response.data.result.propertyId);
           HandleSuccess(
             `${response.data.result.firstName} ${response.data.result.lastName} has been invited as an owner`
           );

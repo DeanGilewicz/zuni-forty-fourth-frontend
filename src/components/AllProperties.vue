@@ -29,7 +29,12 @@
         >
           <div class="property-user">
             <p>
-              User: {{user.firstName}}
+              <template v-if="user.userRoleId === 2">
+                Owner: {{user.firstName}}
+              </template>
+              <template v-else>
+                User: {{user.firstName}}
+              </template>
               <span v-if="user.userStatusId === 1">(requested)</span>
               <span v-if="user.userStatusId === 2">(approved)</span>
               <span v-if="user.userStatusId === 3">(password)</span>
