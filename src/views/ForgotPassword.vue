@@ -56,6 +56,9 @@ export default {
   a {
     color: $yellow;
     font-weight: 400;
+    @media only screen and (min-width: $tablet) {
+      margin-left: 3%;
+    }
   }
 }
 </style>

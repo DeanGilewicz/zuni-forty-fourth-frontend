@@ -29,24 +29,21 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="email" type="email" id="cEmail" name="cEmail" required />
+          <input v-model="email" type="email" id="cEmail" name="cEmail" />
           <label for="cEmail" :class="{ active: isCompanyEmail }">
             Email Address
-            <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="contactNumber" type="tel" id="cNumber" name="cNumber" required />
+          <input v-model="contactNumber" type="tel" id="cNumber" name="cNumber" />
           <label for="cNumber" :class="{ active: isCompanyNumber }">
             Contact Number
-            <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="website" type="text" id="cWebsite" name="cWebsite" required />
+          <input v-model="website" type="text" id="cWebsite" name="cWebsite" />
           <label for="cWebsite" :class="{ active: isCompanyWebsite }">
             Company Website
-            <sup>*</sup>
           </label>
         </div>
         <div class="field">
@@ -172,9 +169,6 @@ export default {
       if (
         this.type !== "" &&
         this.name !== "" &&
-        this.email !== "" &&
-        this.contactNumber !== "" &&
-        this.website !== "" &&
         this.address !== "" &&
         this.city !== "" &&
         this.state !== "" &&
@@ -187,7 +181,7 @@ export default {
           cancelFn: this.resetForm.bind(this)
         });
       } else {
-        HandleError({ message: "Please complete all fields" });
+        HandleError({ message: "Please complete all required fields" });
       }
     },
     resetForm() {

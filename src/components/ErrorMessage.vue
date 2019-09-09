@@ -2,6 +2,7 @@
   <div class="system-message alert alert-danger" role="alert">
     <ul>
       <li v-if="error.result">{{ error.result }}</li>
+      <li v-else-if="error.message">{{ error.message }}</li>
       <li v-else-if="error">{{ error }}</li>
     </ul>
     <button @click.stop="$emit('clearMessage')" class="close">&times;</button>

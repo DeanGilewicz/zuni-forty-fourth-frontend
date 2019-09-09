@@ -53,5 +53,11 @@ export default {
   @media only screen and (min-width: $desktop) {
     width: 50%;
   }
+
+  a {
+    @media only screen and (min-width: $tablet) {
+      margin-left: 3%;
+    }
+  }
 }
 </style>
