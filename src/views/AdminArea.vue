@@ -31,7 +31,7 @@
       @changeOwner="changeOwner"
       @updateOwner="updateOwner"
     />
-    <AddUser v-if="showComponent === 'showAddUser'" />
+    <AddUser v-if="showComponent === 'showAddUser'" @addUser="addUser" />
     <EditUser
       v-if="showComponent === 'showEditUser'"
       :userId="userId"
@@ -104,11 +104,21 @@ export default {
       if (this.properties.length === 0) {
         return;
       }
+      /* polyfill needed for updatedProperty fn to work in IE */
       const propertyIndex = this.properties.findIndex(
         property => property.id === thePropertyId
       );
-      /* polyfill needed for updatedProperty fn to work in IE */
       this.properties[propertyIndex].users.push(addedOwner);
+    },
+    addUser(addedUser, thePropertyId) {
+      if (this.properties.length === 0) {
+        return;
+      }
+      /* polyfill needed for updatedProperty fn to work in IE */
+      const propertyIndex = this.properties.findIndex(
+        property => property.id === thePropertyId
+      );
+      this.properties[propertyIndex].users.push(addedUser);
     },
     editOwner(userId, propertyId) {
       EventBus.$emit("RESET_ERRORS_MESSAGES_MODAL");

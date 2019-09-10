@@ -22,6 +22,7 @@
     <AddUserByOwner
       v-if="showComponent === 'showAddUser'"
       @showManageUsers="showManageUsers"
+      @addUser="addUser"
       :property="property"
     />
   </div>
@@ -96,6 +97,12 @@ export default {
         confirmFn: this.deleteUser.bind(this, user.id)
       });
     },
+    addUser(addedUser) {
+      if (!this.property ) {
+        return;
+      }
+      this.property.users.push(addedUser);
+    },
     deleteUser(userId) {
       const url = "/api/user/delete";
       const axiosData = { userId: userId };
@@ -142,18 +149,6 @@ export default {
   text-transform: none;
   text-decoration: underline;
   color: $yellow-dark;
-}
-
-h2 {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  text-align: center;
-
-  @media only screen and (min-width: $tablet) {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
 }
 
 .property-name {

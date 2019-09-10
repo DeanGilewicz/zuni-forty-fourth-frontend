@@ -119,6 +119,10 @@ export default {
       axios
         .post(url, axiosData, axiosConfig)
         .then(response => {
+          // clear vue form
+          this.resetForm();
+          // emit event to update ui when going back to all properties view
+          this.$emit("addUser", response.data.result);
           // UPDATE UI
           HandleSuccess(
             `${response.data.result.firstName} ${response.data.result.lastName} has been invited as a user`

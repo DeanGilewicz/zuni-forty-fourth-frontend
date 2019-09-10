@@ -140,18 +140,6 @@ export default {
   }
 }
 
-h2 {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  text-align: center;
-
-  @media only screen and (min-width: $tablet) {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-}
-
 .container-neighbors {
   padding-bottom: 10px;
 }
