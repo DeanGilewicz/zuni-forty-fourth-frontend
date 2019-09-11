@@ -91,9 +91,13 @@ export default {
   },
   created() {
     const url = "/api/properties";
+    // Start Loader
+    EventBus.$emit("START_LOADING");
     axios
       .get(url)
       .then(response => {
+        // Stop Loader
+        EventBus.$emit("STOP_LOADING");
         this.properties = response.data;
       })
       .catch(error => HandleError(error));

@@ -29,24 +29,21 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.email" type="email" id="cEmail" name="cEmail" required />
+          <input v-model="theCompany.email" type="email" id="cEmail" name="cEmail" />
           <label for="cEmail" :class="{ active: isCompanyEmail }">
             Email Address
-            <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.contactNumber" type="tel" id="cNumber" name="cNumber" required />
+          <input v-model="theCompany.contactNumber" type="tel" id="cNumber" name="cNumber" />
           <label for="cNumber" :class="{ active: isCompanyNumber }">
             Contact Number
-            <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.website" type="text" id="cWebsite" name="cWebsite" required />
+          <input v-model="theCompany.website" type="text" id="cWebsite" name="cWebsite" />
           <label for="cWebsite" :class="{ active: isCompanyWebsite }">
             Company Website
-            <sup>*</sup>
           </label>
         </div>
         <div class="field">
@@ -168,12 +165,9 @@ export default {
       if (
         this.theCompany.address !== "" &&
         this.theCompany.city !== "" &&
-        this.theCompany.contactNumber !== "" &&
-        this.theCompany.email !== "" &&
         this.theCompany.name !== "" &&
         this.theCompany.state !== "" &&
         this.theCompany.type !== "" &&
-        this.theCompany.website !== "" &&
         this.theCompany.zipCode !== ""
       ) {
         const message = `Are you sure you want to update ${capitalizeFirstLetter(

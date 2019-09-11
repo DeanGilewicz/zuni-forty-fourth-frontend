@@ -62,7 +62,16 @@ nav {
   }
 
   @media only screen and (min-width: $desktop-large) {
-    height: 360px;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    height: auto;
+    writing-mode: horizontal-tb;
   }
 
   a {
@@ -89,6 +98,7 @@ nav {
 
     @media only screen and (min-width: $desktop-large) {
       padding: 14px 0;
+      margin: 0 50px;
     }
   }
 }

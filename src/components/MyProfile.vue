@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import EventBus from "../eventBus";
 import HandleError from "../utils/handleError";
 import axios from "axios";
 import { formatPhoneNumber } from "../utils/formatters";
@@ -55,9 +56,13 @@ export default {
       crossDomain: true,
       withCredentials: true
     };
+    // Start Loader
+    EventBus.$emit("START_LOADING");
     axios
       .post(url, axiosData, axiosConfig)
       .then(response => {
+        // Stop Loader
+        EventBus.$emit("STOP_LOADING");
         this.user = response.data.result;
       })
       .catch(error => HandleError(error));

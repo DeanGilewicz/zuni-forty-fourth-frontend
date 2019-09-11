@@ -103,7 +103,7 @@ export default {
       });
     },
     deleteEvent(companyToDelete) {
-      if (typeof eventToDelete !== "undefined") {
+      if (typeof companyToDelete !== "undefined") {
         const url = "/api/company/delete";
         const axiosData = {
           company: companyToDelete

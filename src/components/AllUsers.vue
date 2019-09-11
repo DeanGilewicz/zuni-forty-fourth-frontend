@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import EventBus from "../eventBus";
 import HandleError from "../utils/handleError";
 import axios from "axios";
 export default {
@@ -30,9 +31,13 @@ export default {
       crossDomain: true,
       withCredentials: true
     };
+    // Start Loader
+    EventBus.$emit("START_LOADING");
     axios
       .post(url, axiosData, axiosConfig)
       .then(response => {
+        // Stop Loader
+        EventBus.$emit("STOP_LOADING");
         this.users = response.data.result;
       })
       .catch(error => HandleError(error));

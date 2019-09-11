@@ -30,6 +30,8 @@ export default {
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+  max-width: 1000px;
+  margin: 0 auto;
 
   @media only screen and (min-width: $desktop) {
     display: flex;

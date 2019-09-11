@@ -62,6 +62,7 @@ export default {
   h2 {
     margin: 0 0 20px;
     color: $blue-grey-very-dark;
+    text-align: left;
   }
 
   p {

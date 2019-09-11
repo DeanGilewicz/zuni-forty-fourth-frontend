@@ -54,10 +54,10 @@
             <div class="field submit">
               <input type="submit" class="btn" value="Submit" />
             </div>
+            <div v-if="isRegistered" class="field">
+              <router-link class="btn-link" to="/">Login Now</router-link>
+            </div>
           </form>
-          <div v-if="isRegistered" class="field">
-            <router-link class="btn-link" to="/">Login Now</router-link>
-          </div>
         </div>
       </div>
     </main>
