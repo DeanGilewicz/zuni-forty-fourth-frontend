@@ -68,7 +68,7 @@
               <input type="submit" value="Reset Password" />
             </div>
           </form>
-          <div v-if="isPasswordReset" class="field">
+          <div v-if="isPasswordReset" class="field login-now">
             <router-link class="btn-link" to="/">Login Now</router-link>
           </div>
         </div>
@@ -208,6 +208,20 @@ header {
   @media only screen and (min-width: $tablet) {
     display: flex;
     flex-wrap: wrap;
+  }
+}
+
+form {
+  .field.submit {
+    @media only screen and (min-width: $tablet) {
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+  }
+  .field.login-now {
+    @media only screen and (min-width: $tablet) {
+      margin-left: 3%;
+    }
   }
 }
 
