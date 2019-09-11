@@ -56,9 +56,13 @@ export default {
       crossDomain: true,
       withCredentials: true
     };
+    // Start Loader
+    EventBus.$emit("START_LOADING");
     axios
       .post(url, axiosData, axiosConfig)
       .then(response => {
+        // Stop Loader
+        EventBus.$emit("STOP_LOADING");
         this.property = response.data;
       })
       .catch(error => HandleError(error));
