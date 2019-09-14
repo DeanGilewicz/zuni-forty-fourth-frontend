@@ -217,7 +217,7 @@ export default {
       axios
         .post(url, axiosData, axiosConfig)
         .then(response => {
-          // update vue modal with additional event
+          // update vue modal with additional company
           this.$emit("updateVueCompanies", response.data.result);
           // reset vue form model
           this.resetForm();
@@ -225,7 +225,7 @@ export default {
           // e.target.reset();
           // UI success message
           HandleSuccess(
-            `The ${response.data.result.name} event has been created`
+            `The ${response.data.result.name} company has been created`
           );
         })
         .catch(error => HandleError(error));

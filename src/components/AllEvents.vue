@@ -16,8 +16,12 @@
           </div>
         </div>
         <div v-if="currentUserRole === 'Admin'" class="admin-only">
-          <button class="btn-edit" @click="onEditEvent(event)">Edit Event</button>
-          <button class="btn-delete" @click="onDeleteEvent(event)">Delete Event</button>
+          <div class="btn-edit-container">
+            <button class="btn-edit" @click="onEditEvent(event)">Edit Event</button>
+          </div>
+          <div class="btn-delete-container">
+            <button class="btn-delete" @click="onDeleteEvent(event)">Delete Event</button>
+          </div>
         </div>
       </li>
     </ul>
@@ -104,7 +108,9 @@ export default {
 
   .event-times {
     @media only screen and (min-width: $tablet) {
+      flex-basis: 50%;
       padding-right: 30px;
+      text-align: right;
     }
 
     @media only screen and (min-width: $desktop) {
@@ -121,6 +127,7 @@ export default {
 
   .event-address {
     @media only screen and (min-width: $tablet) {
+      flex-basis: 50%;
       padding-left: 30px;
     }
 
@@ -145,8 +152,15 @@ export default {
 
 .admin-only {
   display: flex;
-  justify-content: center;
-  text-align: center;
+
+  .btn-edit-container,
+  .btn-delete-container {
+    flex-basis: 50%;
+  }
+
+  .btn-edit-container {
+    text-align: right;
+  }
 
   .btn-edit,
   .btn-delete {
