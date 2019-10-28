@@ -4,9 +4,9 @@
     <div class="container-img">
       <img src="@/assets/zuni44-sitemap.jpg" alt="a sitemap of Zuni Forty Fourth" class="image" />
     </div>
-    <div v-if="properties">
+    <div v-if="filteredProperties">
       <ul class="container-neighbors">
-        <li v-for="property in properties" :key="property.id" class="container-neighbor">
+        <li v-for="property in filteredProperties" :key="property.id" class="container-neighbor">
           <h3>{{property.streetAddress}}</h3>
           <ul v-if="property.users" class="container-details">
             <li v-for="user in property.users" :key="user.id" class="details">
@@ -104,7 +104,18 @@ export default {
       })
       .catch(error => HandleError(error));
   },
-  computed: {},
+  computed: {
+    filteredProperties() {
+      if( this.properties ) {
+        return this.properties.map( property => {
+          if( property.users ) {
+            property.users = property.users.filter(user => user.userStatusId === 2);
+          }
+          return property;
+        });
+      }
+    }
+  },
   methods: {
     phoneNumberFormatted(phoneNumber) {
       return formatPhoneNumber(phoneNumber);
