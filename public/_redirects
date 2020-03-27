@@ -1,7 +1,7 @@
 # Netlify settings for proxy
-# aws
+# heroku
 # /api/*	https://zuni-forty-fourth-api.herokuapp.com/api/:splat  200
 # digital ocean
-/api/*	http://64.225.1.71:5555/api/:splat  200
+/api/*	https://api.zunifortyfourth.com/api/:splat  200
 # Netlify settings for single-page application
 /*			/index.html   200
