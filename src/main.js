@@ -12,10 +12,11 @@ Vue.config.productionTip = false;
 
 // global error handler
 window.onerror = function (msg, src, linenum, colnum, error) {
-  console.error("GLOBAL ERROR HANDLER", msg, src, linenum, colnum, error);
+	// eslint-disable-next-line no-console
+	console.error("GLOBAL ERROR HANDLER", msg, src, linenum, colnum, error);
 };
 
 new Vue({
-  router,
-  render: (h) => h(App),
+	router,
+	render: (h) => h(App),
 }).$mount("#app");
