@@ -2,14 +2,26 @@
   <div>
     <form action="/api/login" method="post" @submit.prevent="logUserIn">
       <div class="field">
-        <input v-model="emailAddress" type="email" id="emailLogin" name="email_address" required />
+        <input
+          id="emailLogin"
+          v-model="emailAddress"
+          type="email"
+          name="email_address"
+          required
+        />
         <label for="emailLogin" :class="{ active: isFilledEmail }">
           Email Address
           <sup>*</sup>
         </label>
       </div>
       <div class="field">
-        <input v-model="password" type="password" id="passwordLogin" name="password" required />
+        <input
+          id="passwordLogin"
+          v-model="password"
+          type="password"
+          name="password"
+          required
+        />
         <label for="passwordLogin" :class="{ active: isFilledPassword }">
           Password
           <sup>*</sup>
@@ -27,11 +39,11 @@ import EventBus from "../eventBus";
 import HandleError from "../utils/handleError";
 import axios from "axios";
 export default {
-  name: "login",
+  name: "Login",
   data() {
     return {
       emailAddress: "",
-      password: ""
+      password: "",
     };
   },
   computed: {
@@ -46,7 +58,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     logUserIn() {
@@ -54,11 +66,11 @@ export default {
         const url = "/api/login";
         const axiosData = {
           emailAddress: this.emailAddress,
-          password: this.password
+          password: this.password,
         };
         const axiosConfig = {
           crossDomain: true,
-          withCredentials: true
+          withCredentials: true,
         };
         // Start Loader
         EventBus.$emit("START_LOADING");
@@ -71,12 +83,12 @@ export default {
             // change route to app home page
             this.$router.push("app");
           })
-          .catch(error => HandleError(error));
+          .catch((error) => HandleError(error));
       } else {
         HandleError({ message: "Please complete all fields" });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

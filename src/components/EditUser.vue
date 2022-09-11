@@ -5,18 +5,30 @@
       <form
         action
         method="post"
-        @submit.prevent="updateUserConfirmationModal"
         class="form__edit-user"
+        @submit.prevent="updateUserConfirmationModal"
       >
         <div class="field">
-          <input v-model="user.firstName" type="text" id="fname" name="first_name" required />
+          <input
+            id="fname"
+            v-model="user.firstName"
+            type="text"
+            name="first_name"
+            required
+          />
           <label for="fname" :class="{ active: isFirstName }">
             First Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="user.lastName" type="text" id="lname" name="last_name" required />
+          <input
+            id="lname"
+            v-model="user.lastName"
+            type="text"
+            name="last_name"
+            required
+          />
           <label for="lname" :class="{ active: isLastName }">
             Last Name
             <sup>*</sup>
@@ -24,9 +36,9 @@
         </div>
         <div class="field">
           <input
+            id="phoneNumber"
             v-model="user.phoneNumber"
             type="tel"
-            id="phoneNumber"
             name="phone_number"
             required
           />
@@ -49,14 +61,14 @@ import HandleError from "../utils/handleError";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "editUser",
+  name: "EditUser",
   props: {
-    userId: Number
+    userId: Number,
   },
   data() {
     return {
       user: {},
-      rollbackUser: {}
+      rollbackUser: {},
     };
   },
   computed: {
@@ -77,28 +89,28 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   created() {
     const url = "/api/user";
     const axiosData = {
-      userId: this.userId
+      userId: this.userId,
     };
     const axiosConfig = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(url, axiosData, axiosConfig)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.user = response.data.result;
         this.rollbackUser = { ...response.data.result };
       })
-      .catch(error => HandleError(error));
+      .catch((error) => HandleError(error));
   },
   methods: {
     updateUserConfirmationModal() {
@@ -113,7 +125,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.updateUser.bind(this),
-          cancelFn: this.resetUser.bind(this)
+          cancelFn: this.resetUser.bind(this),
         });
       } else {
         // handle UI validation messages
@@ -123,26 +135,26 @@ export default {
     updateUser() {
       const url = "/api/user/update";
       const axiosData = {
-        user: this.user
+        user: this.user,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .put(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           this.user = response.data.result;
           this.$emit("updateUser", response.data.result);
         })
-        .catch(error => HandleError(error));
+        .catch((error) => HandleError(error));
     },
     resetUser() {
       this.user = { ...this.rollbackUser };
-    }
-  }
+    },
+  },
 };
 </script>
 

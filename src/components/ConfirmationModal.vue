@@ -2,7 +2,7 @@
   <div v-if="showConfirmationModal" class="confirmation-modal">
     <div class="modal-content">
       <h2>Please Confirm</h2>
-      <p>{{confirmationMessage}}</p>
+      <p>{{ confirmationMessage }}</p>
       <div class="modal-actions">
         <button @click="onCancel">Cancel</button>
         <button @click="onConfirm">Confirm</button>
@@ -13,10 +13,10 @@
 
 <script>
 export default {
-  name: "confirmationModal",
+  name: "ConfirmationModal",
   props: {
     showConfirmationModal: Boolean,
-    confirmationMessage: String
+    confirmationMessage: String,
   },
   methods: {
     onCancel() {
@@ -26,8 +26,8 @@ export default {
     onConfirm() {
       this.$emit("onInvokeModalConfirmFn");
       this.$emit("onCloseConfirmationModal");
-    }
-  }
+    },
+  },
 };
 </script>
 

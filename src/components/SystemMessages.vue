@@ -20,15 +20,15 @@
     <transition name="fade">
       <ConfirmationModal
         v-if="showConfirmationModal"
-        :showConfirmationModal="showConfirmationModal"
-        :confirmationMessage="modalMessage"
+        :show-confirmation-modal="showConfirmationModal"
+        :confirmation-message="modalMessage"
         @onCloseConfirmationModal="onCloseConfirmationModal"
         @onInvokeModalConfirmFn="onInvokeModalConfirmFn"
         @onInvokeModalCancelFn="onInvokeModalCancelFn"
       />
     </transition>
     <transition name="fade">
-      <Loader :isLoading="isLoading" />
+      <Loader :is-loading="isLoading" />
     </transition>
   </div>
 </template>
@@ -41,7 +41,13 @@ import ConfirmationModal from "./ConfirmationModal";
 import Loader from "./Loader";
 
 export default {
-  name: "systemMessages",
+  name: "SystemMessages",
+  components: {
+    ErrorMessage,
+    SuccessMessage,
+    ConfirmationModal,
+    Loader,
+  },
   data() {
     return {
       errors: [],
@@ -50,22 +56,16 @@ export default {
       modalMessage: "",
       confirmFnToInvoke: null,
       cancelFnToInvoke: null,
-      isLoading: false
+      isLoading: false,
     };
   },
-  components: {
-    ErrorMessage,
-    SuccessMessage,
-    ConfirmationModal,
-    Loader
-  },
   mounted() {
-    EventBus.$on("ERROR", error => {
+    EventBus.$on("ERROR", (error) => {
       this.onStopLoading();
       this.onClearMessages();
       this.onClearErrors();
       if (Array.isArray(error.result)) {
-        error.result.forEach(error => {
+        error.result.forEach((error) => {
           this.errors.push(error.msg);
         });
       } else if (error.result != "Auth token is not supplied") {
@@ -77,7 +77,7 @@ export default {
     EventBus.$on("RESET_ERRORS", () => {
       this.onClearErrors();
     });
-    EventBus.$on("SUCCESS", message => {
+    EventBus.$on("SUCCESS", (message) => {
       this.onStopLoading();
       this.onClearErrors();
       this.onClearMessages();
@@ -155,8 +155,8 @@ export default {
       this.onClearErrors();
       this.onClearMessages();
       this.onCloseConfirmationModal();
-    }
-  }
+    },
+  },
 };
 </script>
 

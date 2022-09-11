@@ -2,29 +2,53 @@
   <div>
     <h2>ADD USER</h2>
     <div class="container-form">
-      <form action method="post" @submit.prevent="addUserConfirmationModal" class="form__add-user">
+      <form
+        action
+        method="post"
+        class="form__add-user"
+        @submit.prevent="addUserConfirmationModal"
+      >
         <div class="field">
-          <input v-model="firstName" type="text" id="fname" name="first_name" required />
+          <input
+            id="fname"
+            v-model="firstName"
+            type="text"
+            name="first_name"
+            required
+          />
           <label for="fname" :class="{ active: isFirstName }">
             First Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="lastName" type="text" id="lname" name="last_name" required />
+          <input
+            id="lname"
+            v-model="lastName"
+            type="text"
+            name="last_name"
+            required
+          />
           <label for="lname" :class="{ active: isLastName }">
             Last Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <select v-model="propertyId" id="property" name="property_id" required>
+          <select
+            id="property"
+            v-model="propertyId"
+            name="property_id"
+            required
+          >
             <option value></option>
             <option
               v-for="property in properties"
               :key="property.id"
               :value="property.id"
-            >{{property.streetAddress}}</option>
+            >
+              {{ property.streetAddress }}
+            </option>
           </select>
           <label for="property" :class="{ active: isPropertyId }">
             Property
@@ -32,7 +56,13 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="emailAddress" type="email" id="email" name="email_address" required />
+          <input
+            id="email"
+            v-model="emailAddress"
+            type="email"
+            name="email_address"
+            required
+          />
           <label for="email" :class="{ active: isEmail }">
             Email Address
             <sup>*</sup>
@@ -53,14 +83,14 @@ import HandleSuccess from "../utils/handleSuccess";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "addUser",
+  name: "AddUser",
   data() {
     return {
       properties: [],
       firstName: "",
       lastName: "",
       emailAddress: "",
-      propertyId: ""
+      propertyId: "",
     };
   },
   computed: {
@@ -87,24 +117,24 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   created() {
     const url = "/api/properties/has-owner";
     const axiosConfig = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(url, {}, axiosConfig)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.properties = response.data;
       })
-      .catch(error => HandleError(error));
+      .catch((error) => HandleError(error));
   },
   methods: {
     addUserConfirmationModal() {
@@ -115,7 +145,7 @@ export default {
         this.emailAddress !== ""
       ) {
         const selectedProperty = this.properties.filter(
-          property => property.id === this.propertyId
+          (property) => property.id === this.propertyId
         );
         const message = `Are you sure you want to add ${capitalizeFirstLetter(
           this.firstName
@@ -125,7 +155,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.addUser.bind(this),
-          cancelFn: this.resetForm.bind(this)
+          cancelFn: this.resetForm.bind(this),
         });
       } else {
         // handle UI validation messages
@@ -144,28 +174,32 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         emailAddress: this.emailAddress,
-        propertyId: this.propertyId
+        propertyId: this.propertyId,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           // clear vue form
           this.resetForm();
           // emit event to update ui when going back to all properties view
-          this.$emit("addUser", response.data.result, response.data.result.propertyId);
+          this.$emit(
+            "addUser",
+            response.data.result,
+            response.data.result.propertyId
+          );
           HandleSuccess(
             `${response.data.result.firstName} ${response.data.result.lastName} has been invited as a user`
           );
         })
-        .catch(error => HandleError(error));
-    }
-  }
+        .catch((error) => HandleError(error));
+    },
+  },
 };
 </script>
 

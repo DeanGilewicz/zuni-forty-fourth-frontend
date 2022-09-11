@@ -2,21 +2,34 @@
   <div>
     <h2>CONTACTS</h2>
     <ul class="container-companies">
-      <li v-for="company in companies" :key="company.id" class="container-company">
-        <h4>{{company.name}}</h4>
-        <p>{{company.address}}, {{company.city}}, {{company.state}} {{company.zipCode}}</p>
+      <li
+        v-for="company in companies"
+        :key="company.id"
+        class="container-company"
+      >
+        <h4>{{ company.name }}</h4>
+        <p>
+          {{ company.address }}, {{ company.city }}, {{ company.state }}
+          {{ company.zipCode }}
+        </p>
         <p v-if="company.email">
-          <a :href="`mailto:${company.email}`">{{company.email}}</a>
+          <a :href="`mailto:${company.email}`">{{ company.email }}</a>
         </p>
         <p v-if="company.contactNumber">
-          <a :href="`tel:${company.contactNumber}`">{{phoneNumberFormatted(company.contactNumber)}}</a>
+          <a :href="`tel:${company.contactNumber}`">{{
+            phoneNumberFormatted(company.contactNumber)
+          }}</a>
         </p>
         <p v-if="company.website">
-          <a :href="company.website">{{company.website}}</a>
+          <a :href="company.website">{{ company.website }}</a>
         </p>
         <div v-if="currentUserRole === 'Admin'" class="admin-only">
-          <button class="btn-edit" @click="onEditCompany(company)">Edit Company</button>
-          <button class="btn-delete" @click="onDeleteCompany(company)">Delete Company</button>
+          <button class="btn-edit" @click="onEditCompany(company)">
+            Edit Company
+          </button>
+          <button class="btn-delete" @click="onDeleteCompany(company)">
+            Delete Company
+          </button>
         </div>
       </li>
     </ul>
@@ -24,14 +37,13 @@
 </template>
 
 <script>
-import axios from "axios";
 import { formatPhoneNumber } from "../utils/formatters";
 
 export default {
-  name: "allCompanies",
+  name: "AllCompanies",
   props: {
     companies: Array,
-    currentUserRole: String
+    currentUserRole: String,
   },
   methods: {
     onEditCompany(company) {
@@ -42,8 +54,8 @@ export default {
     },
     phoneNumberFormatted(phoneNumber) {
       return formatPhoneNumber(phoneNumber);
-    }
-  }
+    },
+  },
 };
 </script>
 

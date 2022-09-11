@@ -2,40 +2,46 @@
   <div class>
     <button
       v-if="showComponent !== 'showAllProperties'"
-      @click="showAllProperties"
       class="btn-link"
-    >All Properties</button>
+      @click="showAllProperties"
+    >
+      All Properties
+    </button>
     <button
       v-if="showComponent !== 'showAddOwner'"
-      @click="showAddOwner"
       class="btn-link"
-    >Add Owner</button>
+      @click="showAddOwner"
+    >
+      Add Owner
+    </button>
     <button
       v-if="showComponent !== 'showAddUser'"
-      @click="showAddUser"
       class="btn-link last"
-    >Add User</button>
+      @click="showAddUser"
+    >
+      Add User
+    </button>
     <AllProperties
       v-if="showComponent === 'showAllProperties'"
+      :properties="properties"
       @editOwner="editOwner"
       @deleteOwner="deleteOwnerConfirmationModal"
       @editUser="editUser"
       @deleteUser="deleteUserConfirmationModal"
-      :properties="properties"
     />
     <AddOwner v-if="showComponent === 'showAddOwner'" @addOwner="addOwner" />
     <EditOwner
       v-if="showComponent === 'showEditOwner'"
-      :userId="userId"
-      :propertyId="propertyId"
+      :user-id="userId"
+      :property-id="propertyId"
       @changeOwner="changeOwner"
       @updateOwner="updateOwner"
     />
     <AddUser v-if="showComponent === 'showAddUser'" @addUser="addUser" />
     <EditUser
       v-if="showComponent === 'showEditUser'"
-      :userId="userId"
-      :propertyId="propertyId"
+      :user-id="userId"
+      :property-id="propertyId"
       @updateUser="updateUser"
     />
   </div>
@@ -53,43 +59,50 @@ import AddUser from "@/components/AddUser.vue";
 import EditUser from "@/components/EditUser.vue";
 
 export default {
-  name: "adminArea",
+  name: "AdminArea",
+  components: {
+    AllProperties,
+    AddOwner,
+    EditOwner,
+    AddUser,
+    EditUser,
+  },
   data() {
     return {
       properties: [],
       propertyId: null,
       userId: null,
-      showComponent: "showAllProperties"
+      showComponent: "showAllProperties",
     };
   },
   created() {
     const url = "/api/properties";
     const axiosConfig = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(url, {}, axiosConfig)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.properties = response.data;
       })
-      .catch(error => HandleError(error));
+      .catch((error) => HandleError(error));
   },
   methods: {
     deleteOwnerConfirmationModal(ownerId, message) {
       EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
         message,
-        confirmFn: this.deleteOwner.bind(this, ownerId)
+        confirmFn: this.deleteOwner.bind(this, ownerId),
       });
     },
     deleteUserConfirmationModal(userId, message) {
       EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
         message,
-        confirmFn: this.deleteUser.bind(this, userId)
+        confirmFn: this.deleteUser.bind(this, userId),
       });
     },
     showAllProperties() {
@@ -110,7 +123,7 @@ export default {
       }
       /* polyfill needed for updatedProperty fn to work in IE */
       const propertyIndex = this.properties.findIndex(
-        property => property.id === thePropertyId
+        (property) => property.id === thePropertyId
       );
       this.properties[propertyIndex].users.push(addedOwner);
     },
@@ -120,7 +133,7 @@ export default {
       }
       /* polyfill needed for updatedProperty fn to work in IE */
       const propertyIndex = this.properties.findIndex(
-        property => property.id === thePropertyId
+        (property) => property.id === thePropertyId
       );
       this.properties[propertyIndex].users.push(addedUser);
     },
@@ -142,14 +155,14 @@ export default {
         const axiosData = { ownerId };
         const axiosConfig = {
           crossDomain: true,
-          withCredentials: true
+          withCredentials: true,
         };
         // Start Loader
         EventBus.$emit("START_LOADING");
         axios
           .post(url, axiosData, axiosConfig)
-          .then(response => {
-            const deletedOwnerId = response.data.result.id;
+          .then((response) => {
+            // const deletedOwnerId = response.data.result.id;
             let propertyIndex;
             this.properties.forEach((property, propIndex) => {
               if (property.ownerId === ownerId) {
@@ -165,7 +178,7 @@ export default {
               `${response.data.result.firstName} ${response.data.result.lastName} has been deleted`
             );
           })
-          .catch(error => HandleError(error));
+          .catch((error) => HandleError(error));
       } else {
         HandleError({ message: "Owner not able to be deleted" });
       }
@@ -176,13 +189,13 @@ export default {
         const axiosData = { userId };
         const axiosConfig = {
           crossDomain: true,
-          withCredentials: true
+          withCredentials: true,
         };
         // Start Loader
         EventBus.$emit("START_LOADING");
         axios
           .post(url, axiosData, axiosConfig)
-          .then(response => {
+          .then((response) => {
             const deletedUserId = response.data.result.id;
             let propertyIndex;
             let deletedUserIndex;
@@ -210,7 +223,7 @@ export default {
               `${response.data.result.firstName} ${response.data.result.lastName} has been deleted`
             );
           })
-          .catch(error => HandleError(error));
+          .catch((error) => HandleError(error));
       } else {
         HandleError({ message: "User not able to be deleted" });
       }
@@ -220,7 +233,7 @@ export default {
         return;
       }
       const propertyIndex = this.properties.findIndex(
-        property => property.id === updatedProperty.id
+        (property) => property.id === updatedProperty.id
       );
       /* polyfill needed for updatedProperty fn to work in IE */
       this.properties[propertyIndex] = updatedProperty;
@@ -231,10 +244,10 @@ export default {
         return;
       }
       const propertyIndex = this.properties.findIndex(
-        property => property.id === theProperty.id
+        (property) => property.id === theProperty.id
       );
       const ownerIndex = this.properties[propertyIndex].users.findIndex(
-        user => user.id === updatedOwner.id
+        (user) => user.id === updatedOwner.id
       );
       /* polyfill needed for updatedProperty fn to work in IE */
       this.properties[propertyIndex].owner = updatedOwner;
@@ -249,25 +262,18 @@ export default {
       }
       const thePropertyId = this.propertyId;
       const propertyIndex = this.properties.findIndex(
-        property => property.id === thePropertyId
+        (property) => property.id === thePropertyId
       );
       const userIndex = this.properties[propertyIndex].users.findIndex(
-        user => user.id === updatedUser.id
+        (user) => user.id === updatedUser.id
       );
       /* polyfill needed for findIndex fn to work in IE */
       this.properties[propertyIndex].users[userIndex] = updatedUser;
       HandleSuccess(
         `${updatedUser.firstName} ${updatedUser.lastName} has been updated`
       );
-    }
+    },
   },
-  components: {
-    AllProperties,
-    AddOwner,
-    EditOwner,
-    AddUser,
-    EditUser
-  }
 };
 </script>
 

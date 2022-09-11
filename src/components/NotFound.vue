@@ -5,9 +5,7 @@
     </header>
     <main>
       <div class="container-logo">
-        <h1 class="logo small">
-          <span class="small">Zuni</span> Forty Fourth
-        </h1>
+        <h1 class="logo small"><span class="small">Zuni</span> Forty Fourth</h1>
       </div>
       <div class="container-content">
         <h2>Opps...</h2>
@@ -23,7 +21,7 @@
 
 <script>
 export default {
-  name: "notFound"
+  name: "NotFound",
 };
 </script>
 

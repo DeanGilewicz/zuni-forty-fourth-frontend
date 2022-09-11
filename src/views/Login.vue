@@ -1,9 +1,7 @@
 <template>
   <div class="container-login">
     <div class="container-logo">
-      <h1 class="logo">
-        <span>Zuni</span> Forty Fourth
-      </h1>
+      <h1 class="logo"><span>Zuni</span> Forty Fourth</h1>
     </div>
     <div class="container-form">
       <Login />
@@ -16,10 +14,10 @@
 import Login from "@/components/Login.vue";
 
 export default {
-  name: "login",
+  name: "Login",
   components: {
-    Login
-  }
+    Login,
+  },
 };
 </script>
 

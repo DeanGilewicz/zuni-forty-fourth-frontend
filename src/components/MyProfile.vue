@@ -1,8 +1,12 @@
 <template>
   <div>
     <h2>MY PROFILE</h2>
-    <router-link class="a-link" to="/app/profile/edit">Edit My Profile</router-link>
-    <router-link class="a-link last-link" to="/app/profile/change-password">Change Password</router-link>
+    <router-link class="a-link" to="/app/profile/edit"
+      >Edit My Profile</router-link
+    >
+    <router-link class="a-link last-link" to="/app/profile/change-password"
+      >Change Password</router-link
+    >
     <div v-if="user" class="current__user">
       <div class="container-image">
         <div
@@ -12,24 +16,29 @@
       </div>
       <p>
         <span>Name :</span>
-        {{user.firstName}} {{user.lastName}}
+        {{ user.firstName }} {{ user.lastName }}
       </p>
       <p>
         <span>Email :</span>
-        {{user.emailAddress}}
+        {{ user.emailAddress }}
       </p>
       <p>
         <span>Phone # :</span>
-        {{phoneNumberFormatted(user.phoneNumber)}}
+        {{ phoneNumberFormatted(user.phoneNumber) }}
       </p>
       <p>
         Interests :
         <template v-for="(interest, index) in user.interests">
-          <span v-if="interest.interest && index < (user.interests.length - 1)" :key="index">
-            {{interest.interest}},
+          <span
+            v-if="interest.interest && index < user.interests.length - 1"
+            :key="index"
+          >
+            {{ interest.interest }},
             <!---->
           </span>
-          <span v-else-if="interest.interest" :key="index">{{interest.interest}}</span>
+          <span v-else-if="interest.interest" :key="index">{{
+            interest.interest
+          }}</span>
         </template>
       </p>
     </div>
@@ -43,48 +52,49 @@ import axios from "axios";
 import { formatPhoneNumber } from "../utils/formatters";
 
 export default {
-  name: "myProfile",
+  name: "MyProfile",
   data() {
     return {
-      user: {}
+      user: {},
     };
+  },
+  computed: {
+    cloudinaryOptimizedImage() {
+      if (this.user.image) {
+        const cloudinaryUploadUrl =
+          "https://res.cloudinary.com/cloudassets/image/upload/";
+        let optimizedUrl = this.user.image.split(cloudinaryUploadUrl);
+        // add cloudinary optimizations
+        optimizedUrl[0] = cloudinaryUploadUrl + "q_auto,f_auto/";
+        return optimizedUrl.join("");
+      } else {
+        return "https://res.cloudinary.com/cloudassets/image/upload/q_auto,f_auto/v1565501442/zuni44/profile-placeholder.png";
+      }
+    },
   },
   created() {
     const url = "/api/user/current";
     const axiosData = {};
     const axiosConfig = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(url, axiosData, axiosConfig)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.user = response.data.result;
       })
-      .catch(error => HandleError(error));
-  },
-  computed: {
-    cloudinaryOptimizedImage() {
-      if( this.user.image ) {
-        const cloudinaryUploadUrl = "https://res.cloudinary.com/cloudassets/image/upload/";
-        let optimizedUrl = this.user.image.split(cloudinaryUploadUrl);
-        // add cloudinary optimizations
-        optimizedUrl[0] = cloudinaryUploadUrl + "q_auto,f_auto/";
-        return optimizedUrl.join('');
-      } else {
-        return "https://res.cloudinary.com/cloudassets/image/upload/q_auto,f_auto/v1565501442/zuni44/profile-placeholder.png";
-      }
-    }
+      .catch((error) => HandleError(error));
   },
   methods: {
     phoneNumberFormatted(phoneNumber) {
       return formatPhoneNumber(phoneNumber);
-    }
-  }
+    },
+  },
 };
 </script>
 

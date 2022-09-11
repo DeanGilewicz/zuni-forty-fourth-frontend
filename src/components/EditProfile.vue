@@ -7,13 +7,13 @@
         <form
           action
           method="POST"
-          @submit.prevent="onUploadImage"
           class="container-image-upload"
           encrypt="multipart/form-data"
+          @submit.prevent="onUploadImage"
         >
           <div class="container-image">
             <div
-              v-if="this.selectedFilePreview"
+              v-if="selectedFilePreview"
               class="image"
               :style="`background-image: url('${selectedFilePreview}')`"
             ></div>
@@ -25,26 +25,32 @@
           </div>
           <div class="container-image-trigger">
             <input
+              ref="fileInput"
               type="file"
               name="image"
               accept="image/*"
+              style="display: none"
               @change="onFileSelected"
-              style="display:none"
-              ref="fileInput"
             />
-            <div v-if="this.selectedFile" class="image-name">
-              <span>{{this.selectedFile.name}}</span>
+            <div v-if="selectedFile" class="image-name">
+              <span>{{ selectedFile.name }}</span>
             </div>
-            <button type="button" @click="$refs.fileInput.click()">Choose File</button>
+            <button type="button" @click="$refs.fileInput.click()">
+              Choose File
+            </button>
           </div>
           <div class="container-image-save">
-            <div v-if="this.selectedFile" class="image-clear">
+            <div v-if="selectedFile" class="image-clear">
               <span @click="onRemoveImage">Clear Selection</span>
             </div>
-            <button type="submit" :disabled="(!this.selectedFile) ? true : false">Upload</button>
+            <button type="submit" :disabled="!selectedFile ? true : false">
+              Upload
+            </button>
           </div>
           <div
-            v-if="user.image && user.image.indexOf('profile-placeholder') === -1"
+            v-if="
+              user.image && user.image.indexOf('profile-placeholder') === -1
+            "
             class="container-image-reset"
           >
             <button type="button" @click="onResetImage">Reset</button>
@@ -54,18 +60,30 @@
       <form
         action
         method="post"
-        @submit.prevent="updateUserProfileConfirmationModal"
         class="form_edit_profile"
+        @submit.prevent="updateUserProfileConfirmationModal"
       >
         <div class="field">
-          <input v-model="user.firstName" type="text" id="fname" name="first_name" required />
+          <input
+            id="fname"
+            v-model="user.firstName"
+            type="text"
+            name="first_name"
+            required
+          />
           <label for="fname" :class="{ active: isFirstName }">
             First Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="user.lastName" type="text" id="lname" name="last_name" required />
+          <input
+            id="lname"
+            v-model="user.lastName"
+            type="text"
+            name="last_name"
+            required
+          />
           <label for="lname" :class="{ active: isLastName }">
             Last Name
             <sup>*</sup>
@@ -73,9 +91,9 @@
         </div>
         <div class="field">
           <input
+            id="phoneNumber"
             v-model="user.phoneNumber"
             type="tel"
-            id="phoneNumber"
             name="phone_number"
             required
           />
@@ -86,25 +104,33 @@
         </div>
         <template v-if="user.userRoleId === 2 || user.userRoleId === 3">
           <template v-for="(interest, index) in user.interests">
-            <div class="field" :key="index">
-              <input v-model="interest.interest" :id="`interest-${index}`" name="interest" />
+            <div :key="index" class="field">
+              <input
+                :id="`interest-${index}`"
+                v-model="interest.interest"
+                name="interest"
+              />
               <label
                 :for="`interest-${index}`"
-                :class="{ active: (interest.interest !== '') ? true : false }"
-              >Interest</label>
+                :class="{ active: interest.interest !== '' ? true : false }"
+                >Interest</label
+              >
             </div>
           </template>
           <template v-if="user.interests && user.interests.length < 6">
             <div class="field">
               <input
-                v-model="additionalInterest"
                 id="interest-additional"
+                v-model="additionalInterest"
                 name="interest_additional"
               />
               <label
                 for="interest-additional"
-                :class="{ active: (this.additionalInterest !== '') ? true : false }"
-              >Interest</label>
+                :class="{
+                  active: additionalInterest !== '' ? true : false,
+                }"
+                >Interest</label
+              >
             </div>
           </template>
         </template>
@@ -123,34 +149,15 @@ import HandleSuccess from "../utils/handleSuccess";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "editProfile",
+  name: "EditProfile",
   data() {
     return {
       user: {},
       rollbackUser: {},
       additionalInterest: "",
       selectedFile: null,
-      selectedFilePreview: null
+      selectedFilePreview: null,
     };
-  },
-  created() {
-    const url = "/api/user/current";
-    const axiosData = {};
-    const axiosConfig = {
-      crossDomain: true,
-      withCredentials: true
-    };
-    // Start Loader
-    EventBus.$emit("START_LOADING");
-    axios
-      .post(url, axiosData, axiosConfig)
-      .then(response => {
-        // Stop Loader
-        EventBus.$emit("STOP_LOADING");
-        this.user = response.data.result;
-        this.rollbackUser = { ...response.data.result };
-      })
-      .catch(error => HandleError(error));
   },
   computed: {
     isFirstName() {
@@ -172,16 +179,36 @@ export default {
       return false;
     },
     cloudinaryOptimizedImage() {
-      if( this.user.image ) {
-        const cloudinaryUploadUrl = "https://res.cloudinary.com/cloudassets/image/upload/";
+      if (this.user.image) {
+        const cloudinaryUploadUrl =
+          "https://res.cloudinary.com/cloudassets/image/upload/";
         let optimizedUrl = this.user.image.split(cloudinaryUploadUrl);
         // add cloudinary optimizations
         optimizedUrl[0] = cloudinaryUploadUrl + "q_auto,f_auto/";
-        return optimizedUrl.join('');
+        return optimizedUrl.join("");
       } else {
         return "https://res.cloudinary.com/cloudassets/image/upload/q_auto,f_auto/v1565501442/zuni44/profile-placeholder.png";
       }
-    }
+    },
+  },
+  created() {
+    const url = "/api/user/current";
+    const axiosData = {};
+    const axiosConfig = {
+      crossDomain: true,
+      withCredentials: true,
+    };
+    // Start Loader
+    EventBus.$emit("START_LOADING");
+    axios
+      .post(url, axiosData, axiosConfig)
+      .then((response) => {
+        // Stop Loader
+        EventBus.$emit("STOP_LOADING");
+        this.user = response.data.result;
+        this.rollbackUser = { ...response.data.result };
+      })
+      .catch((error) => HandleError(error));
   },
   methods: {
     updateUserProfileConfirmationModal() {
@@ -196,7 +223,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.updateUser.bind(this),
-          cancelFn: this.resetUser.bind(this)
+          cancelFn: this.resetUser.bind(this),
         });
       } else {
         // handle UI validation messages
@@ -205,7 +232,7 @@ export default {
     },
     onFileSelected(event) {
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         this.selectedFilePreview = e.target.result;
       };
       if (event.target.files[0]) {
@@ -233,7 +260,7 @@ export default {
       const axiosConfig = {
         crossDomain: true,
         withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: { "Content-Type": "multipart/form-data" },
         // onUploadProgress: uploadEvent => {
         //   console.log('upload progress' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
         // }
@@ -242,7 +269,7 @@ export default {
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           this.user = response.data.result;
           // clear file
           this.onRemoveImage();
@@ -250,7 +277,7 @@ export default {
             `${response.data.result.firstName} ${response.data.result.lastName} profile picture has been updated`
           );
         })
-        .catch(error => HandleError(error));
+        .catch((error) => HandleError(error));
     },
     onResetImage() {
       // show reset if not using placeholder image
@@ -258,13 +285,13 @@ export default {
       const axiosData = {};
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           this.user = response.data.result;
           // clear file
           this.onRemoveImage();
@@ -272,7 +299,7 @@ export default {
             `${response.data.result.firstName} ${response.data.result.lastName} profile picture has been reset`
           );
         })
-        .catch(error => HandleError(error));
+        .catch((error) => HandleError(error));
     },
     updateUser() {
       const url = "/api/user/current/update";
@@ -283,13 +310,13 @@ export default {
       }
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .put(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           this.user = response.data.result;
           // clear additional interest
           this.additionalInterest = "";
@@ -297,12 +324,12 @@ export default {
             `${response.data.result.firstName} ${response.data.result.lastName} has been updated`
           );
         })
-        .catch(error => HandleError(error));
+        .catch((error) => HandleError(error));
     },
     resetUser() {
       this.user = { ...this.rollbackUser };
-    }
-  }
+    },
+  },
 };
 </script>
 

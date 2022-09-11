@@ -5,9 +5,7 @@
     </header>
     <main>
       <div class="container-logo">
-        <h1 class="logo small">
-          <span class="small">Zuni</span> Forty Fourth
-        </h1>
+        <h1 class="logo small"><span class="small">Zuni</span> Forty Fourth</h1>
       </div>
       <div class="container-content">
         <h2>OWNER REGISTRATION CONFIRMATION</h2>
@@ -15,14 +13,14 @@
           <form
             action
             method="post"
-            @submit.prevent="registrationConfirmationConfirmationModal"
             class="form__registration-owner"
+            @submit.prevent="registrationConfirmationConfirmationModal"
           >
             <div class="field">
               <input
+                id="emailAddress"
                 v-model="emailAddress"
                 type="email"
-                id="emailAddress"
                 name="email_address"
                 required
               />
@@ -32,7 +30,13 @@
               </label>
             </div>
             <div class="field">
-              <input v-model="verifyCode" type="text" id="verifyCode" name="verify_code" required />
+              <input
+                id="verifyCode"
+                v-model="verifyCode"
+                type="text"
+                name="verify_code"
+                required
+              />
               <label for="verifyCode" :class="{ active: isVerifyCode }">
                 Verification Code
                 <sup>*</sup>
@@ -40,9 +44,9 @@
             </div>
             <div class="field">
               <input
+                id="tempPassword"
                 v-model="tempPassword"
                 type="password"
-                id="tempPassword"
                 name="tempPassword"
                 required
               />
@@ -70,13 +74,13 @@ import HandleError from "../utils/handleError";
 import HandleSuccess from "../utils/handleSuccess";
 import axios from "axios";
 export default {
-  name: "ownerRegistrationConfirmation",
+  name: "OwnerRegistrationConfirmation",
   data() {
     return {
       emailAddress: "",
       verifyCode: "",
       tempPassword: "",
-      isRegistered: false
+      isRegistered: false,
     };
   },
   computed: {
@@ -97,7 +101,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     registrationConfirmationConfirmationModal() {
@@ -110,7 +114,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.registrationConfirmation.bind(this),
-          cancelFn: this.resetForm.bind(this)
+          cancelFn: this.resetForm.bind(this),
         });
       } else {
         // handle UI validation messages
@@ -127,17 +131,17 @@ export default {
       const axiosData = {
         emailAddress: this.emailAddress,
         verifyCode: this.verifyCode,
-        tempPassword: this.tempPassword
+        tempPassword: this.tempPassword,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           // reset vue form model
           this.resetForm();
           // show home (log in now) cta
@@ -147,9 +151,9 @@ export default {
             `${response.data.result.firstName} ${response.data.result.lastName} has been successfully registered as an owner`
           );
         })
-        .catch(error => HandleError(error));
-    }
-  }
+        .catch((error) => HandleError(error));
+    },
+  },
 };
 </script>
 

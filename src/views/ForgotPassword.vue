@@ -1,9 +1,7 @@
 <template>
   <div class="container-forgot-password">
     <div class="container-logo">
-      <h1 class="logo">
-        <span>Zuni</span> Forty Fourth
-      </h1>
+      <h1 class="logo"><span>Zuni</span> Forty Fourth</h1>
     </div>
     <div class="container-form">
       <ForgotPassword />
@@ -16,10 +14,10 @@
 import ForgotPassword from "@/components/ForgotPassword.vue";
 
 export default {
-  name: "forgotPassword",
+  name: "ForgotPassword",
   components: {
-    ForgotPassword
-  }
+    ForgotPassword,
+  },
 };
 </script>
 

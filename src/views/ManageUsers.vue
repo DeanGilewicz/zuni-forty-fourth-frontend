@@ -2,28 +2,40 @@
   <div>
     <div v-if="showComponent === 'showManageUsers'">
       <h2>MANAGE USERS</h2>
+
       <div v-if="property" class="property__owner">
-        <p class="property-name">{{property.streetAddress}}</p>
+        <p class="property-name">{{ property.streetAddress }}</p>
       </div>
-      <button v-if="showComponent !== 'showAddUser'" @click="showAddUser" class="btn-link">Add User</button>
+
+      <button
+        v-if="showComponent !== 'showAddUser'"
+        class="btn-link"
+        @click="showAddUser"
+      >
+        Add User
+      </button>
+
       <div v-if="property && property.users">
-        <p class="user-primary">{{owner.firstName}} {{owner.lastName}}</p>
+        <p class="user-primary">{{ owner.firstName }} {{ owner.lastName }}</p>
+
         <div v-for="user in users" :key="user.id" class="property-user">
           <p class="user-secondary">
-            {{user.firstName}} {{user.lastName}}
-            <span
-              v-if="user.userStatusId === 1"
-            >(requested access)</span>
+            {{ user.firstName }} {{ user.lastName }}
+            <span v-if="user.userStatusId === 1">(requested access)</span>
           </p>
-          <button @click="deleteUserConfirmationModal(user)">Delete User</button>
+
+          <button @click="deleteUserConfirmationModal(user)">
+            Delete User
+          </button>
         </div>
       </div>
     </div>
+
     <AddUserByOwner
       v-if="showComponent === 'showAddUser'"
+      :property="property"
       @showManageUsers="showManageUsers"
       @addUser="addUser"
-      :property="property"
     />
   </div>
 </template>
@@ -38,50 +50,55 @@ import Cookie from "js-cookie";
 import jwtDecode from "../utils/jwtDecode";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "manageUsers",
+  name: "ManageUsers",
+  components: {
+    AddUserByOwner,
+  },
   data() {
     return {
       currentUserId: jwtDecode(Cookie.get("token")).userId,
       property: null,
-      showComponent: "showManageUsers"
+      showComponent: "showManageUsers",
     };
-  },
-  created() {
-    // get property by owner
-    const url = "/api/property/owner";
-    const axiosData = {
-      ownerId: this.currentUserId
-    };
-    const axiosConfig = {
-      crossDomain: true,
-      withCredentials: true
-    };
-    // Start Loader
-    EventBus.$emit("START_LOADING");
-    axios
-      .post(url, axiosData, axiosConfig)
-      .then(response => {
-        // Stop Loader
-        EventBus.$emit("STOP_LOADING");
-        this.property = response.data;
-      })
-      .catch(error => HandleError(error));
   },
   computed: {
     owner() {
       if (this.property && this.property.users) {
         return this.property.users.filter(
-          user => user.id === this.property.ownerId
+          (user) => user.id === this.property.ownerId
         )[0];
       }
+      return undefined;
     },
     users() {
       if (this.property && this.property.users) {
         return this.property.users.filter(
-          user => user.id !== this.property.ownerId
+          (user) => user.id !== this.property.ownerId
         );
       }
-    }
+      return undefined;
+    },
+  },
+  created() {
+    // get property by owner
+    const url = "/api/property/owner";
+    const axiosData = {
+      ownerId: this.currentUserId,
+    };
+    const axiosConfig = {
+      crossDomain: true,
+      withCredentials: true,
+    };
+    // Start Loader
+    EventBus.$emit("START_LOADING");
+    axios
+      .post(url, axiosData, axiosConfig)
+      .then((response) => {
+        // Stop Loader
+        EventBus.$emit("STOP_LOADING");
+        this.property = response.data;
+      })
+      .catch((error) => HandleError(error));
   },
   methods: {
     showManageUsers() {
@@ -98,11 +115,11 @@ export default {
       )} ${capitalizeFirstLetter(user.lastName)}`;
       EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
         message,
-        confirmFn: this.deleteUser.bind(this, user.id)
+        confirmFn: this.deleteUser.bind(this, user.id),
       });
     },
     addUser(addedUser) {
-      if (!this.property ) {
+      if (!this.property) {
         return;
       }
       this.property.users.push(addedUser);
@@ -112,16 +129,16 @@ export default {
       const axiosData = { userId: userId };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           if (this.property.users.length > 0) {
             const deletedUserId = response.data.result.id;
-            const updatedUserArray = this.property.users.filter(user => {
+            const updatedUserArray = this.property.users.filter((user) => {
               if (user.id !== deletedUserId) {
                 return user;
               }
@@ -134,12 +151,9 @@ export default {
             );
           }
         })
-        .catch(error => HandleError(error));
-    }
+        .catch((error) => HandleError(error));
+    },
   },
-  components: {
-    AddUserByOwner
-  }
 };
 </script>
 

@@ -5,11 +5,11 @@
       <form
         action
         method="post"
-        @submit.prevent="updateCompanyConfirmationModal"
         class="form__company"
+        @submit.prevent="updateCompanyConfirmationModal"
       >
         <div class="field">
-          <select v-model="theCompany.type" id="cType" name="cType" required>
+          <select id="cType" v-model="theCompany.type" name="cType" required>
             <option value></option>
             <option value="electrical">Electrical</option>
             <option value="builder">Builder</option>
@@ -22,46 +22,85 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.name" type="text" id="cName" name="cName" required />
+          <input
+            id="cName"
+            v-model="theCompany.name"
+            type="text"
+            name="cName"
+            required
+          />
           <label for="cName" :class="{ active: isCompanyName }">
             Company Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.email" type="email" id="cEmail" name="cEmail" />
+          <input
+            id="cEmail"
+            v-model="theCompany.email"
+            type="email"
+            name="cEmail"
+          />
           <label for="cEmail" :class="{ active: isCompanyEmail }">
             Email Address
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.contactNumber" type="tel" id="cNumber" name="cNumber" />
+          <input
+            id="cNumber"
+            v-model="theCompany.contactNumber"
+            type="tel"
+            name="cNumber"
+          />
           <label for="cNumber" :class="{ active: isCompanyNumber }">
             Contact Number
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.website" type="text" id="cWebsite" name="cWebsite" />
+          <input
+            id="cWebsite"
+            v-model="theCompany.website"
+            type="text"
+            name="cWebsite"
+          />
           <label for="cWebsite" :class="{ active: isCompanyWebsite }">
             Company Website
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.address" type="text" id="cAddress" name="cAddress" required />
+          <input
+            id="cAddress"
+            v-model="theCompany.address"
+            type="text"
+            name="cAddress"
+            required
+          />
           <label for="cAddress" :class="{ active: isCompanyAddress }">
             Address
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.city" type="text" id="cCity" name="cCity" required />
+          <input
+            id="cCity"
+            v-model="theCompany.city"
+            type="text"
+            name="cCity"
+            required
+          />
           <label for="cCity" :class="{ active: isCompanyCity }">
             City
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <select v-model="theCompany.state" type="text" id="cState" name="cState" required>
+          <select
+            id="cState"
+            v-model="theCompany.state"
+            type="text"
+            name="cState"
+            required
+          >
             <option value="CO" selected>Colorado</option>
           </select>
           <label class="active" for="cState">
@@ -70,7 +109,13 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="theCompany.zipCode" type="text" id="cZipCode" name="cZipCode" required />
+          <input
+            id="cZipCode"
+            v-model="theCompany.zipCode"
+            type="text"
+            name="cZipCode"
+            required
+          />
           <label for="cZipCode" :class="{ active: isCompanyZip }">
             Zip
             <sup>*</sup>
@@ -91,14 +136,14 @@ import HandleSuccess from "../utils/handleSuccess";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "editCompany",
+  name: "EditCompany",
   props: {
-    company: Object
+    company: Object,
   },
   data() {
     return {
       theCompany: this.company,
-      rollbackCompany: { ...this.company }
+      rollbackCompany: { ...this.company },
     };
   },
   computed: {
@@ -155,7 +200,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     showAllCompanies() {
@@ -176,7 +221,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.updateCompany.bind(this),
-          cancelFn: this.resetCompany.bind(this)
+          cancelFn: this.resetCompany.bind(this),
         });
       } else {
         HandleError({ message: "Please complete all fields" });
@@ -185,28 +230,28 @@ export default {
     resetCompany() {
       this.theCompany = { ...this.rollbackCompany };
     },
-    updateCompany(e) {
+    updateCompany() {
       const url = "/api/company/update";
       const axiosData = {
-        company: this.theCompany
+        company: this.theCompany,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .put(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           // update vue modal with additional event
           this.$emit("updateVueCompany", response.data.result);
           // UI success message
           HandleSuccess(`${response.data.result.name} has been updated`);
         })
-        .catch(error => HandleError(error));
-    }
-  }
+        .catch((error) => HandleError(error));
+    },
+  },
 };
 </script>
 

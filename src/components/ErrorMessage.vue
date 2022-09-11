@@ -5,14 +5,14 @@
       <li v-else-if="error.message">{{ error.message }}</li>
       <li v-else-if="error">{{ error }}</li>
     </ul>
-    <button @click.stop="$emit('clearMessage')" class="close">&times;</button>
+    <button class="close" @click.stop="$emit('clearMessage')">&times;</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "errorMessage",
-  props: ["error"]
+  name: "ErrorMessage",
+  props: ["error"],
 };
 </script>
 

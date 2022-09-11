@@ -5,9 +5,7 @@
     </header>
     <main>
       <div class="container-logo">
-        <h1 class="logo small">
-          <span class="small">Zuni</span> Forty Fourth
-        </h1>
+        <h1 class="logo small"><span class="small">Zuni</span> Forty Fourth</h1>
       </div>
       <div class="container-content">
         <h2>FORGOT PASSWORD RESET</h2>
@@ -15,14 +13,14 @@
           <form
             action
             method="post"
-            @submit.prevent="forgotPasswordResetConfirmationModal"
             class="form__password-reset"
+            @submit.prevent="forgotPasswordResetConfirmationModal"
           >
             <div class="field">
               <input
+                id="emailAddress"
                 v-model="emailAddress"
                 type="email"
-                id="emailAddress"
                 name="email_address"
                 required
               />
@@ -32,7 +30,13 @@
               </label>
             </div>
             <div class="field">
-              <input v-model="verifyCode" type="text" id="verifyCode" name="verify_code" required />
+              <input
+                id="verifyCode"
+                v-model="verifyCode"
+                type="text"
+                name="verify_code"
+                required
+              />
               <label for="verifyCode" :class="{ active: isVerifyCode }">
                 Reset Code
                 <sup>*</sup>
@@ -40,9 +44,9 @@
             </div>
             <div class="field">
               <input
+                id="newPassword"
                 v-model="newPassword"
                 type="password"
-                id="newPassword"
                 name="new_password"
                 required
               />
@@ -53,13 +57,16 @@
             </div>
             <div class="field">
               <input
+                id="confirmPassword"
                 v-model="confirmPassword"
                 type="password"
-                id="confirmPassword"
                 name="confirm_password"
                 required
               />
-              <label for="confirmPassword" :class="{ active: isConfirmPassword }">
+              <label
+                for="confirmPassword"
+                :class="{ active: isConfirmPassword }"
+              >
                 Confirm Password
                 <sup>*</sup>
               </label>
@@ -83,14 +90,14 @@ import HandleError from "../utils/handleError";
 import HandleSuccess from "../utils/handleSuccess";
 import axios from "axios";
 export default {
-  name: "forgotPasswordReset",
+  name: "ForgotPasswordReset",
   data() {
     return {
       emailAddress: "",
       newPassword: "",
       confirmPassword: "",
       verifyCode: "",
-      isPasswordReset: false
+      isPasswordReset: false,
     };
   },
   computed: {
@@ -117,7 +124,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     forgotPasswordResetConfirmationModal() {
@@ -131,7 +138,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.forgotPasswordReset.bind(this),
-          cancelFn: this.resetForm.bind(this)
+          cancelFn: this.resetForm.bind(this),
         });
       } else {
         // handle UI validation messages
@@ -151,17 +158,17 @@ export default {
         emailAddress: this.emailAddress,
         newPassword: this.newPassword,
         confirmPassword: this.confirmPassword,
-        verifyCode: this.verifyCode
+        verifyCode: this.verifyCode,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then(() => {
           // reset vue form model
           this.resetForm();
           // show home (log in now) cta
@@ -169,9 +176,9 @@ export default {
           // UPDATE UI
           HandleSuccess("Your password has been reset");
         })
-        .catch(error => HandleError(error));
-    }
-  }
+        .catch((error) => HandleError(error));
+    },
+  },
 };
 </script>
 

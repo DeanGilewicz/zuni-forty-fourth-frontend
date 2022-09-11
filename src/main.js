@@ -11,11 +11,11 @@ Vue.config.productionTip = false;
 // console.log(Vue.config);
 
 // global error handler
-window.onerror = function(msg, src, linenum, colnum, error) {
-	console.error("GLOBAL ERROR HANDLER", msg, src, linenum, colnum, error);
+window.onerror = function (msg, src, linenum, colnum, error) {
+  console.error("GLOBAL ERROR HANDLER", msg, src, linenum, colnum, error);
 };
 
 new Vue({
-	router,
-	render: h => h(App)
+  router,
+  render: (h) => h(App),
 }).$mount("#app");

@@ -1,19 +1,18 @@
 <template>
   <div class="system-message alert alert-success" role="alert">
     <p>{{ message }}</p>
-    <button @click.stop="$emit('clearMessage')" class="close">&times;</button>
+    <button class="close" @click.stop="$emit('clearMessage')">&times;</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "successMessage",
-  props: ["message"]
+  name: "SuccessMessage",
+  props: ["message"],
 };
 </script>
 
 <style lang="scss" scoped>
-
 p {
   margin: 0;
 }
@@ -25,5 +24,4 @@ button {
   line-height: 1;
   font-size: 24px;
 }
-
 </style>

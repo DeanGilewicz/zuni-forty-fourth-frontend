@@ -1,6 +1,6 @@
 <template>
   <div class>
-    <ForgotPasswordReset/>
+    <ForgotPasswordReset />
   </div>
 </template>
 
@@ -8,9 +8,9 @@
 import ForgotPasswordReset from "@/components/ForgotPasswordReset.vue";
 
 export default {
-  name: "forgotPasswordReset",
+  name: "ForgotPasswordReset",
   components: {
-    ForgotPasswordReset
-  }
+    ForgotPasswordReset,
+  },
 };
 </script>

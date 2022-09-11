@@ -2,17 +2,21 @@
   <div class="contacts">
     <button
       v-if="showComponent !== 'showAllCompanies'"
-      @click="showAllCompanies"
       class="btn-link"
-    >All Companies</button>
+      @click="showAllCompanies"
+    >
+      All Companies
+    </button>
     <button
       v-if="showComponent !== 'showAddCompany' && currentUserRole === 'Admin'"
-      @click="showAddCompany"
       class="btn-link"
-    >Add Company</button>
+      @click="showAddCompany"
+    >
+      Add Company
+    </button>
     <AllCompanies
       v-if="showComponent === 'showAllCompanies'"
-      :currentUserRole="currentUserRole"
+      :current-user-role="currentUserRole"
       :companies="companies"
       @onEditCompany="onEditCompany"
       @onDeleteCompany="deleteCompanyConfirmationModal"
@@ -42,32 +46,37 @@ import EditCompany from "@/components/EditCompany.vue";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
   name: "Contacts",
+  components: {
+    AllCompanies,
+    AddCompany,
+    EditCompany,
+  },
   props: {
-    currentUserRole: String
+    currentUserRole: String,
   },
   data() {
     return {
       showComponent: "showAllCompanies",
       companies: [],
-      company: null
+      company: null,
     };
   },
   created() {
     const url = "/api/companies";
     const axiosConfig = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(url, {}, axiosConfig)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.companies = response.data.result;
       })
-      .catch(error => HandleError(error));
+      .catch((error) => HandleError(error));
   },
   methods: {
     showAllCompanies() {
@@ -92,7 +101,7 @@ export default {
     updateCompany(updatedCompany) {
       // find company in companies array
       const companyIndex = this.companies.findIndex(
-        company => company.id === updatedCompany.id
+        (company) => company.id === updatedCompany.id
       );
       // set comapny
       this.companies[companyIndex] = updatedCompany;
@@ -103,28 +112,28 @@ export default {
       )}?`;
       EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
         message,
-        confirmFn: this.deleteEvent.bind(this, companyToDelete)
+        confirmFn: this.deleteEvent.bind(this, companyToDelete),
       });
     },
     deleteEvent(companyToDelete) {
       if (typeof companyToDelete !== "undefined") {
         const url = "/api/company/delete";
         const axiosData = {
-          company: companyToDelete
+          company: companyToDelete,
         };
         const axiosConfig = {
           crossDomain: true,
-          withCredentials: true
+          withCredentials: true,
         };
         // Start Loader
         EventBus.$emit("START_LOADING");
         axios
           .post(url, axiosData, axiosConfig)
-          .then(response => {
+          .then((response) => {
             if (this.companies.length > 0) {
               const deletedCompanyId = response.data.result.id;
               const companyPos = this.$data.companies
-                .map(company => company.id)
+                .map((company) => company.id)
                 .indexOf(deletedCompanyId);
               const beforeDeletedCompany = this.$data.companies.slice(
                 0,
@@ -135,23 +144,18 @@ export default {
               );
               this.companies = [
                 ...beforeDeletedCompany,
-                ...afterDeletedCompany
+                ...afterDeletedCompany,
               ];
               // success message UI
               HandleSuccess(`${response.data.result.name} has been deleted`);
             }
           })
-          .catch(error => HandleError(error));
+          .catch((error) => HandleError(error));
       } else {
         HandleError({ message: "Contact not able to be deleted" });
       }
-    }
+    },
   },
-  components: {
-    AllCompanies,
-    AddCompany,
-    EditCompany
-  }
 };
 </script>
 

@@ -1,26 +1,49 @@
 <template>
   <div>
     <h2>ADD USER</h2>
-    <p class="property-name">{{property.streetAddress}}</p>
-    <button @click="showManageUsers" class="btn-link">Manage Users</button>
+    <p class="property-name">{{ property.streetAddress }}</p>
+    <button class="btn-link" @click="showManageUsers">Manage Users</button>
     <div class="container-form">
-      <form action method="post" @submit.prevent="addUserConfirmationModal" class="form__add-user">
+      <form
+        action
+        method="post"
+        class="form__add-user"
+        @submit.prevent="addUserConfirmationModal"
+      >
         <div class="field">
-          <input v-model="firstName" type="text" id="fname" name="first_name" required />
+          <input
+            id="fname"
+            v-model="firstName"
+            type="text"
+            name="first_name"
+            required
+          />
           <label for="fname" :class="{ active: isFirstName }">
             First Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="lastName" type="text" id="lname" name="last_name" required />
+          <input
+            id="lname"
+            v-model="lastName"
+            type="text"
+            name="last_name"
+            required
+          />
           <label for="lname" :class="{ active: isLastName }">
             Last Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="emailAddress" type="email" id="email" name="email_address" required />
+          <input
+            id="email"
+            v-model="emailAddress"
+            type="email"
+            name="email_address"
+            required
+          />
           <label for="email" :class="{ active: isEmail }">
             Email Address
             <sup>*</sup>
@@ -41,15 +64,15 @@ import HandleSuccess from "../utils/handleSuccess";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "addUserByOwner",
+  name: "AddUserByOwner",
   props: {
-    property: Object
+    property: Object,
   },
   data() {
     return {
       firstName: "",
       lastName: "",
-      emailAddress: ""
+      emailAddress: "",
     };
   },
   computed: {
@@ -70,7 +93,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     showManageUsers() {
@@ -90,7 +113,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.addUser.bind(this),
-          cancelFn: this.resetForm.bind(this)
+          cancelFn: this.resetForm.bind(this),
         });
       } else {
         // handle UI validation messages
@@ -108,17 +131,17 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         emailAddress: this.emailAddress,
-        propertyId: this.property.id
+        propertyId: this.property.id,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           // clear vue form
           this.resetForm();
           // emit event to update ui when going back to all properties view
@@ -128,9 +151,9 @@ export default {
             `${response.data.result.firstName} ${response.data.result.lastName} has been invited as a user`
           );
         })
-        .catch(error => HandleError(error));
-    }
-  }
+        .catch((error) => HandleError(error));
+    },
+  },
 };
 </script>
 

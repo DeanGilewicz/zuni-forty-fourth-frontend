@@ -5,11 +5,11 @@
       <form
         action
         method="post"
-        @submit.prevent="addCompanyConfirmationModal"
         class="form__company"
+        @submit.prevent="addCompanyConfirmationModal"
       >
         <div class="field">
-          <select v-model="type" id="cType" name="cType" required>
+          <select id="cType" v-model="type" name="cType" required>
             <option value></option>
             <option value="electrical">Electrical</option>
             <option value="builder">Builder</option>
@@ -22,46 +22,63 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="name" type="text" id="cName" name="cName" required />
+          <input id="cName" v-model="name" type="text" name="cName" required />
           <label for="cName" :class="{ active: isCompanyName }">
             Company Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="email" type="email" id="cEmail" name="cEmail" />
+          <input id="cEmail" v-model="email" type="email" name="cEmail" />
           <label for="cEmail" :class="{ active: isCompanyEmail }">
             Email Address
           </label>
         </div>
         <div class="field">
-          <input v-model="contactNumber" type="tel" id="cNumber" name="cNumber" />
+          <input
+            id="cNumber"
+            v-model="contactNumber"
+            type="tel"
+            name="cNumber"
+          />
           <label for="cNumber" :class="{ active: isCompanyNumber }">
             Contact Number
           </label>
         </div>
         <div class="field">
-          <input v-model="website" type="text" id="cWebsite" name="cWebsite" />
+          <input id="cWebsite" v-model="website" type="text" name="cWebsite" />
           <label for="cWebsite" :class="{ active: isCompanyWebsite }">
             Company Website
           </label>
         </div>
         <div class="field">
-          <input v-model="address" type="text" id="cAddress" name="cAddress" required />
+          <input
+            id="cAddress"
+            v-model="address"
+            type="text"
+            name="cAddress"
+            required
+          />
           <label for="cAddress" :class="{ active: isCompanyAddress }">
             Address
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="city" type="text" id="cCity" name="cCity" required />
+          <input id="cCity" v-model="city" type="text" name="cCity" required />
           <label for="cCity" :class="{ active: isCompanyCity }">
             City
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <select v-model="state" type="text" id="cState" name="cState" required>
+          <select
+            id="cState"
+            v-model="state"
+            type="text"
+            name="cState"
+            required
+          >
             <option value></option>
             <option value="CO">Colorado</option>
           </select>
@@ -71,7 +88,13 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="zipCode" type="text" id="cZipCode" name="cZipCode" required />
+          <input
+            id="cZipCode"
+            v-model="zipCode"
+            type="text"
+            name="cZipCode"
+            required
+          />
           <label for="cZipCode" :class="{ active: isCompanyZip }">
             Zip
             <sup>*</sup>
@@ -91,7 +114,7 @@ import HandleError from "../utils/handleError";
 import HandleSuccess from "../utils/handleSuccess";
 import axios from "axios";
 export default {
-  name: "addCompany",
+  name: "AddCompany",
   data() {
     return {
       type: "",
@@ -102,7 +125,7 @@ export default {
       address: "",
       city: "",
       state: "",
-      zipCode: ""
+      zipCode: "",
     };
   },
   computed: {
@@ -159,7 +182,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     showAllCompanies() {
@@ -178,7 +201,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.addCompany.bind(this),
-          cancelFn: this.resetForm.bind(this)
+          cancelFn: this.resetForm.bind(this),
         });
       } else {
         HandleError({ message: "Please complete all required fields" });
@@ -195,7 +218,7 @@ export default {
       this.state = "CO";
       this.zipCode = "";
     },
-    addCompany(e) {
+    addCompany() {
       const url = "/api/company/create";
       const axiosData = {
         type: this.type,
@@ -206,17 +229,17 @@ export default {
         address: this.address,
         city: this.city,
         state: this.state,
-        zipCode: this.zipCode
+        zipCode: this.zipCode,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           // update vue modal with additional company
           this.$emit("updateVueCompanies", response.data.result);
           // reset vue form model
@@ -228,9 +251,9 @@ export default {
             `The ${response.data.result.name} company has been created`
           );
         })
-        .catch(error => HandleError(error));
-    }
-  }
+        .catch((error) => HandleError(error));
+    },
+  },
 };
 </script>
 

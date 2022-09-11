@@ -2,7 +2,11 @@
   <div class="home">
     <header>
       <nav id="nav">
-        <label for="show-menu" class="mobile-menu-trigger" v-on:click="toggleMobileMenu($event)">
+        <label
+          for="show-menu"
+          class="mobile-menu-trigger"
+          @click="toggleMobileMenu($event)"
+        >
           <span>Menu</span>
           <div class="lines"></div>
         </label>
@@ -14,7 +18,9 @@
             <router-link to="/app/admin">Admin Area</router-link>
           </li>
           <li v-if="currentUserRole === 'Owner'">
-            <router-link :to="{name: 'manageUsers'}">Manage Users</router-link>
+            <router-link :to="{ name: 'manageUsers' }"
+              >Manage Users</router-link
+            >
           </li>
           <li>
             <router-link to="/app/profile">My Profile</router-link>
@@ -27,11 +33,9 @@
     </header>
     <main>
       <div class="container-logo">
-        <h1 class="logo small">
-          <span class="small">Zuni</span> Forty Fourth
-        </h1>
+        <h1 class="logo small"><span class="small">Zuni</span> Forty Fourth</h1>
       </div>
-      <router-view :currentUserRole="currentUserRole" />
+      <router-view :current-user-role="currentUserRole" />
     </main>
   </div>
 </template>
@@ -43,12 +47,18 @@ import axios from "axios";
 import Cookie from "js-cookie";
 import jwtDecode from "../utils/jwtDecode";
 export default {
-  name: "home",
+  name: "Home",
   data() {
     return {
       currentUserRole: jwtDecode(Cookie.get("token")).role,
-      currentUserId: jwtDecode(Cookie.get("token")).userId
+      currentUserId: jwtDecode(Cookie.get("token")).userId,
     };
+  },
+  watch: {
+    $route() {
+      this.mobileMenuTriggerEl.classList.remove("active"); // close mobile menu
+      if (this.bodyEl) this.bodyEl.classList.remove("no-scroll"); // allow body scroll
+    },
   },
   mounted() {
     this.bodyEl = document.querySelector("body");
@@ -65,19 +75,13 @@ export default {
       this.debounce(this.resetMobileMenu, 300)
     );
   },
-  watch: {
-    $route() {
-      this.mobileMenuTriggerEl.classList.remove("active"); // close mobile menu
-      if (this.bodyEl) this.bodyEl.classList.remove("no-scroll"); // allow body scroll
-    }
-  },
   methods: {
     debounce(func, wait, immediate) {
       var timeout;
       return function executedFunction() {
         var context = this;
         var args = arguments;
-        var later = function() {
+        var later = function () {
           timeout = null;
           if (!immediate) func.apply(context, args);
         };
@@ -101,7 +105,7 @@ export default {
       const axiosData = {};
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
@@ -115,9 +119,9 @@ export default {
           EventBus.$emit("STOP_LOADING");
           this.$router.push("/");
         })
-        .catch(error => HandleError(error));
-    }
-  }
+        .catch((error) => HandleError(error));
+    },
+  },
 };
 </script>
 

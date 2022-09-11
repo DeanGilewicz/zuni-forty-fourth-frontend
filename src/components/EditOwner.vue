@@ -5,18 +5,30 @@
       <form
         action
         method="post"
-        @submit.prevent="updateOwnerConfirmationModal"
         class="form__edit-owner"
+        @submit.prevent="updateOwnerConfirmationModal"
       >
         <div class="field">
-          <input v-model="owner.firstName" type="text" id="fname" name="first_name" required />
+          <input
+            id="fname"
+            v-model="owner.firstName"
+            type="text"
+            name="first_name"
+            required
+          />
           <label for="fname" :class="{ active: isFirstName }">
             First Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="owner.lastName" type="text" id="lname" name="last_name" required />
+          <input
+            id="lname"
+            v-model="owner.lastName"
+            type="text"
+            name="last_name"
+            required
+          />
           <label for="lname" :class="{ active: isLastName }">
             Last Name
             <sup>*</sup>
@@ -24,9 +36,9 @@
         </div>
         <div class="field">
           <input
+            id="phoneNumber"
             v-model="owner.phoneNumber"
             type="tel"
-            id="phoneNumber"
             name="phone_number"
             required
           />
@@ -45,8 +57,8 @@
       <form
         action
         method="post"
-        @submit.prevent="changeOwnerConfirmationModal(newPropertyOwnerId)"
         class="form__change-owner"
+        @submit.prevent="changeOwnerConfirmationModal(newPropertyOwnerId)"
       >
         <div class="field">
           <select
@@ -59,11 +71,18 @@
               v-for="user in propertyUsersNoOwners"
               :key="user.id"
               :value="user.id"
-            >{{user.firstName}} {{user.lastName}}</option>
+            >
+              {{ user.firstName }} {{ user.lastName }}
+            </option>
           </select>
         </div>
         <div class="field submit">
-          <input type="submit" class="btn" value="Change owner" :disabled="disableSubmit" />
+          <input
+            type="submit"
+            class="btn"
+            value="Change owner"
+            :disabled="disableSubmit"
+          />
         </div>
       </form>
     </div>
@@ -76,10 +95,10 @@ import HandleError from "../utils/handleError";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "editOwner",
+  name: "EditOwner",
   props: {
     userId: Number,
-    propertyId: Number
+    propertyId: Number,
   },
   data() {
     return {
@@ -87,14 +106,14 @@ export default {
       rollbackOwner: {},
       property: null,
       newPropertyOwnerId: "default",
-      disableSubmit: true
+      disableSubmit: true,
     };
   },
   computed: {
     propertyUsersNoOwners() {
       if (this.property && this.property.users) {
         const ownerId = this.property.ownerId;
-        return this.property.users.filter(user => user.id !== ownerId);
+        return this.property.users.filter((user) => user.id !== ownerId);
       }
       return [];
     },
@@ -115,46 +134,46 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   created() {
     const url = "/api/user";
     const axiosData = {
-      userId: this.userId
+      userId: this.userId,
     };
     const axiosConfig = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(url, axiosData, axiosConfig)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.owner = response.data.result;
         this.rollbackOwner = { ...response.data.result };
       })
-      .catch(error => HandleError(error));
+      .catch((error) => HandleError(error));
     const allUsersUrl = "/api/property/users";
     const axiosData2 = {
-      propertyId: this.propertyId
+      propertyId: this.propertyId,
     };
     const axiosConfig2 = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(allUsersUrl, axiosData2, axiosConfig2)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.property = response.data;
       })
-      .catch(error => HandleError(error));
+      .catch((error) => HandleError(error));
   },
   methods: {
     updateOwnerConfirmationModal() {
@@ -169,7 +188,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.updateOwner.bind(this),
-          cancelFn: this.resetOwner.bind(this)
+          cancelFn: this.resetOwner.bind(this),
         });
       } else {
         // handle UI validation messages
@@ -185,7 +204,7 @@ export default {
           confirmFn: this.changeOwner.bind(this, newPropertyOwnerId),
           cancelFn: () => {
             this.newPropertyOwnerId = "default";
-          }
+          },
         });
       } else {
         // handle UI validation messages
@@ -195,21 +214,21 @@ export default {
     updateOwner() {
       const url = "/api/owner/update";
       const axiosData = {
-        owner: this.owner
+        owner: this.owner,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .put(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           this.owner = response.data.result;
           this.$emit("updateOwner", response.data.result, this.property);
         })
-        .catch(error => HandleError(error));
+        .catch((error) => HandleError(error));
     },
     resetOwner() {
       this.owner = { ...this.rollbackOwner };
@@ -231,20 +250,20 @@ export default {
       const url = "/api/property/changeOwner";
       const axiosData = {
         propertyId: this.property.id,
-        userId: parseInt(userId, 10)
+        userId: parseInt(userId, 10),
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .put(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           const ownerId = response.data.ownerId;
           const matchedOwner = response.data.users.filter(
-            user => user.id === ownerId
+            (user) => user.id === ownerId
           );
           this.owner = matchedOwner[0];
           this.property = response.data;
@@ -254,9 +273,9 @@ export default {
 
           this.$emit("changeOwner", response.data);
         })
-        .catch(error => HandleError(error));
-    }
-  }
+        .catch((error) => HandleError(error));
+    },
+  },
 };
 </script>
 

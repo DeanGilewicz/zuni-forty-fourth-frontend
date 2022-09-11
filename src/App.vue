@@ -1,7 +1,7 @@
 <template>
   <SystemMessages>
     <div id="app">
-      <router-view/>
+      <router-view />
     </div>
   </SystemMessages>
 </template>
@@ -9,10 +9,10 @@
 <script>
 import SystemMessages from "./components/SystemMessages.vue";
 export default {
-  name: "app",
+  name: "App",
   components: {
-    SystemMessages
-  }
+    SystemMessages,
+  },
 };
 </script>
 

@@ -2,23 +2,38 @@
   <div>
     <h2>ALL PROPERTIES</h2>
     <ul class="container-properties">
-      <li v-for="property in properties" :key="property.id" class="container-property">
+      <li
+        v-for="property in properties"
+        :key="property.id"
+        class="container-property"
+      >
         <div class="property-name">
-          <h3>{{property.streetAddress}}</h3>
+          <h3>{{ property.streetAddress }}</h3>
         </div>
         <div v-if="property.owner" class="container-property-owner">
           <div class="property-owner">
-            <p>Owner: {{property.owner.firstName}}</p>
+            <p>Owner: {{ property.owner.firstName }}</p>
           </div>
           <div class="property-owner-triggers">
             <p>
-              <button @click="editOwner(property.ownerId, property.id)">Edit Owner</button>
+              <button @click="editOwner(property.ownerId, property.id)">
+                Edit Owner
+              </button>
             </p>
             <p>
               <button
-                @click="deleteOwner(property.ownerId, `Are you sure you want to delete ${capitalizeFirstLetter(property.owner.firstName)} ${capitalizeFirstLetter(property.owner.lastName)}`)"
                 class="btn-delete"
-              >Delete Owner</button>
+                @click="
+                  deleteOwner(
+                    property.ownerId,
+                    `Are you sure you want to delete ${capitalizeFirstLetter(
+                      property.owner.firstName
+                    )} ${capitalizeFirstLetter(property.owner.lastName)}`
+                  )
+                "
+              >
+                Delete Owner
+              </button>
             </p>
           </div>
         </div>
@@ -30,11 +45,9 @@
           <div class="property-user">
             <p>
               <template v-if="user.userRoleId === 2">
-                Owner: {{user.firstName}}
+                Owner: {{ user.firstName }}
               </template>
-              <template v-else>
-                User: {{user.firstName}}
-              </template>
+              <template v-else> User: {{ user.firstName }} </template>
               <span v-if="user.userStatusId === 1">(requested)</span>
               <span v-if="user.userStatusId === 2">(approved)</span>
               <span v-if="user.userStatusId === 3">(password)</span>
@@ -46,9 +59,18 @@
             </p>
             <p>
               <button
-                @click="deleteUser(user.id, `Are you sure you want to delete ${capitalizeFirstLetter(user.firstName)} ${capitalizeFirstLetter(user.lastName)}`)"
                 class="btn-delete"
-              >Delete User</button>
+                @click="
+                  deleteUser(
+                    user.id,
+                    `Are you sure you want to delete ${capitalizeFirstLetter(
+                      user.firstName
+                    )} ${capitalizeFirstLetter(user.lastName)}`
+                  )
+                "
+              >
+                Delete User
+              </button>
             </p>
           </div>
         </div>
@@ -60,13 +82,13 @@
 <script>
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "allProperties",
+  name: "AllProperties",
   props: {
-    properties: Array
+    properties: Array,
   },
   data() {
     return {
-      displayView: "allProperties" // show which component to render -> all properties / add owner / add user / edit owner / edit user
+      displayView: "allProperties", // show which component to render -> all properties / add owner / add user / edit owner / edit user
     };
   },
   methods: {
@@ -75,11 +97,11 @@ export default {
     },
     propertyUsersNoOwners(propertyId) {
       const propertyPos = this.properties
-        .map(property => property.id)
+        .map((property) => property.id)
         .indexOf(propertyId);
       const property = this.properties[propertyPos];
       if (property.users) {
-        return property.users.filter(user => user.id !== property.ownerId);
+        return property.users.filter((user) => user.id !== property.ownerId);
       }
       return [];
     },
@@ -94,8 +116,8 @@ export default {
     },
     deleteUser(userId, message) {
       this.$emit("deleteUser", userId, message);
-    }
-  }
+    },
+  },
 };
 </script>
 

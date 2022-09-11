@@ -2,17 +2,21 @@
   <div class="events">
     <button
       v-if="showComponent !== 'showAllEvents'"
-      @click="showAllEvents"
       class="btn-link"
-    >All Events</button>
+      @click="showAllEvents"
+    >
+      All Events
+    </button>
     <button
       v-if="showComponent !== 'showAddEvent' && currentUserRole === 'Admin'"
-      @click="showAddEvent"
       class="btn-link"
-    >Add Event</button>
+      @click="showAddEvent"
+    >
+      Add Event
+    </button>
     <AllEvents
       v-if="showComponent === 'showAllEvents'"
-      :currentUserRole="currentUserRole"
+      :current-user-role="currentUserRole"
       :events="events"
       @onEditEvent="onEditEvent"
       @onDeleteEvent="deleteEventConfirmationModal"
@@ -41,33 +45,38 @@ import AddEvent from "../components/AddEvent";
 import EditEvent from "@/components/EditEvent.vue";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "events",
+  name: "Events",
+  components: {
+    AllEvents,
+    AddEvent,
+    EditEvent,
+  },
   props: {
-    currentUserRole: String
+    currentUserRole: String,
   },
   data() {
     return {
       showComponent: "showAllEvents",
       events: [],
-      event: null
+      event: null,
     };
   },
   created() {
     const url = "/api/events";
     const axiosConfig = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(url, {}, axiosConfig)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.events = response.data.result;
       })
-      .catch(error => HandleError(error));
+      .catch((error) => HandleError(error));
   },
   methods: {
     showAllEvents() {
@@ -92,7 +101,7 @@ export default {
     updateEvent(updatedEvent) {
       // find event in events array
       const eventIndex = this.events.findIndex(
-        event => event.id === updatedEvent.id
+        (event) => event.id === updatedEvent.id
       );
       // set event
       this.events[eventIndex] = updatedEvent;
@@ -103,28 +112,28 @@ export default {
       )} event?`;
       EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
         message,
-        confirmFn: this.deleteEvent.bind(this, eventToDelete)
+        confirmFn: this.deleteEvent.bind(this, eventToDelete),
       });
     },
     deleteEvent(eventToDelete) {
       if (typeof eventToDelete !== "undefined") {
         const url = "/api/event/delete";
         const axiosData = {
-          event: eventToDelete
+          event: eventToDelete,
         };
         const axiosConfig = {
           crossDomain: true,
-          withCredentials: true
+          withCredentials: true,
         };
         // Start Loader
         EventBus.$emit("START_LOADING");
         axios
           .post(url, axiosData, axiosConfig)
-          .then(response => {
+          .then((response) => {
             if (this.events.length > 0) {
               const deletedEventId = response.data.result.id;
               const eventPos = this.events
-                .map(event => event.id)
+                .map((event) => event.id)
                 .indexOf(deletedEventId);
               const beforeDeletedEvent = this.events.slice(0, eventPos);
               const afterDeletedEvent = this.events.slice(eventPos + 1);
@@ -135,17 +144,12 @@ export default {
               );
             }
           })
-          .catch(error => HandleError(error));
+          .catch((error) => HandleError(error));
       } else {
         HandleError({ message: "User not able to be deleted" });
       }
-    }
+    },
   },
-  components: {
-    AllEvents,
-    AddEvent,
-    EditEvent
-  }
 };
 </script>
 

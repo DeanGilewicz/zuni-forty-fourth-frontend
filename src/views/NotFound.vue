@@ -1,6 +1,6 @@
 <template>
   <div class>
-    <NotFound/>
+    <NotFound />
   </div>
 </template>
 
@@ -8,9 +8,9 @@
 import NotFound from "@/components/NotFound.vue";
 
 export default {
-  name: "notFound",
+  name: "NotFound",
   components: {
-    NotFound
-  }
+    NotFound,
+  },
 };
 </script>

@@ -1,64 +1,91 @@
 <template>
   <div class="neighbors">
     <h2>NEIGHBORS</h2>
+
     <div class="container-img">
-      <img src="@/assets/zuni44-sitemap.jpg" alt="a sitemap of Zuni Forty Fourth" class="image" />
+      <img
+        src="@/assets/zuni44-sitemap.jpg"
+        alt="a sitemap of Zuni Forty Fourth"
+        class="image"
+      />
     </div>
+
     <div v-if="filteredProperties">
       <ul class="container-neighbors">
-        <li v-for="property in filteredProperties" :key="property.id" class="container-neighbor">
-          <h3>{{property.streetAddress}}</h3>
+        <li
+          v-for="property in filteredProperties"
+          :key="property.id"
+          class="container-neighbor"
+        >
+          <h3>{{ property.streetAddress }}</h3>
+
           <ul v-if="property.users" class="container-details">
             <li v-for="user in property.users" :key="user.id" class="details">
               <div class="container-image-profile">
                 <div
                   class="image"
-                  :style="`background-image: url('${cloudinaryOptimizedImage(user.image)}')`"
+                  :style="`background-image: url('${cloudinaryOptimizedImage(
+                    user.image
+                  )}')`"
                 ></div>
               </div>
-              <h4>{{user.firstName}} {{user.lastName}}</h4>
+
+              <h4>{{ user.firstName }} {{ user.lastName }}</h4>
+
               <p @click="onUserProfileModal(user)">...</p>
             </li>
           </ul>
         </li>
       </ul>
     </div>
+
     <transition name="fade">
       <div v-if="modalUser" class="modal-profile-user">
         <div class="modal-content">
-          <div @click="resetUserProfileModal" class="modal-close">
+          <div class="modal-close" @click="resetUserProfileModal">
             <button>&times;</button>
           </div>
+
           <div class="modal-wrapper">
             <div class="modal-image">
               <div
                 class="image"
-                :style="`background-image: url('${cloudinaryOptimizedImage(modalUser.image)}')`"
+                :style="`background-image: url('${cloudinaryOptimizedImage(
+                  modalUser.image
+                )}')`"
               ></div>
             </div>
+
             <div class="modal-details">
-              <h5>{{modalUser.firstName}} {{modalUser.lastName}}</h5>
+              <h5>{{ modalUser.firstName }} {{ modalUser.lastName }}</h5>
+
               <p>
                 <a
                   :href="`mailto:${modalUser.emailAddress}`"
                   class="modal-email"
-                >{{modalUser.emailAddress}}</a>
+                >
+                  {{ modalUser.emailAddress }}
+                </a>
               </p>
+
               <p>
-                <a
-                  :href="`tel:${modalUser.phoneNumber}`"
-                  class="modal-phone"
-                >{{phoneNumberFormatted(modalUser.phoneNumber)}}</a>
+                <a :href="`tel:${modalUser.phoneNumber}`" class="modal-phone">
+                  {{ phoneNumberFormatted(modalUser.phoneNumber) }}
+                </a>
               </p>
             </div>
           </div>
-          <div v-if="modalUser.interests && modalUser.interests.length > 0" class="modal-interests">
+
+          <div
+            v-if="modalUser.interests && modalUser.interests.length > 0"
+            class="modal-interests"
+          >
             <p>Interests:</p>
+
             <ul>
-              <li
-                v-for="(interest, index) in modalUser.interests"
-                :key="index"
-              >{{interest.interest}}</li>
+              <li v-for="(interest, index) in modalUser.interests" :key="index">
+                {{ interest.interest }}
+              </li>
             </ul>
           </div>
         </div>
@@ -74,12 +101,28 @@ import { formatPhoneNumber } from "../utils/formatters";
 import axios from "axios";
 
 export default {
-  name: "neighbors",
+  name: "Neighbors",
+  components: {},
   data() {
     return {
       properties: [],
-      modalUser: null
+      modalUser: null,
     };
+  },
+  computed: {
+    filteredProperties() {
+      if (this.properties) {
+        return this.properties.map((property) => {
+          if (property.users) {
+            property.users = property.users.filter(
+              (user) => user.userStatusId === 2
+            );
+          }
+          return property;
+        });
+      }
+      return [];
+    },
   },
   mounted() {
     this.bodyEl = document.querySelector("body");
@@ -91,30 +134,18 @@ export default {
     const url = "/api/properties/all";
     const axiosConfig = {
       crossDomain: true,
-      withCredentials: true
+      withCredentials: true,
     };
     // Start Loader
     EventBus.$emit("START_LOADING");
     axios
       .post(url, {}, axiosConfig)
-      .then(response => {
+      .then((response) => {
         // Stop Loader
         EventBus.$emit("STOP_LOADING");
         this.properties = response.data;
       })
-      .catch(error => HandleError(error));
-  },
-  computed: {
-    filteredProperties() {
-      if( this.properties ) {
-        return this.properties.map( property => {
-          if( property.users ) {
-            property.users = property.users.filter(user => user.userStatusId === 2);
-          }
-          return property;
-        });
-      }
-    }
+      .catch((error) => HandleError(error));
   },
   methods: {
     phoneNumberFormatted(phoneNumber) {
@@ -133,18 +164,18 @@ export default {
       this.modalUser = null;
     },
     cloudinaryOptimizedImage(image) {
-      if( image ) {
-        const cloudinaryUploadUrl = "https://res.cloudinary.com/cloudassets/image/upload/";
+      if (image) {
+        const cloudinaryUploadUrl =
+          "https://res.cloudinary.com/cloudassets/image/upload/";
         let optimizedUrl = image.split(cloudinaryUploadUrl);
         // add cloudinary optimizations
         optimizedUrl[0] = cloudinaryUploadUrl + "q_auto,f_auto/";
-        return optimizedUrl.join('');
+        return optimizedUrl.join("");
       } else {
         return "https://res.cloudinary.com/cloudassets/image/upload/q_auto,f_auto/v1565501442/zuni44/profile-placeholder.png";
       }
-    }
+    },
   },
-  components: {}
 };
 </script>
 

@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  name: "loader",
+  name: "Loader",
   props: {
-    isLoading: Boolean
-  }
+    isLoading: Boolean,
+  },
 };
 </script>
 

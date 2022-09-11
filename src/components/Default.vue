@@ -4,16 +4,26 @@
       <h2>WELCOME</h2>
       <div class="container-content">
         <div class="container-img">
-          <img src="@/assets/zuni44.jpg" alt="a rendered drawing of Zuni Forty Fourth" />
+          <img
+            src="@/assets/zuni44.jpg"
+            alt="a rendered drawing of Zuni Forty Fourth"
+          />
         </div>
         <div class="container-text">
-          <p>Established in 2018, Zuni Forty Fourth is comprised of 11 modern town homes in the Sunnyside neighborhood.</p>
-          <p>With great walkability and proximity to shops, restaurants and parks, our homes are ideally located to take advantage of all Denver has to offer.</p>
+          <p>
+            Established in 2018, Zuni Forty Fourth is comprised of 11 modern
+            town homes in the Sunnyside neighborhood.
+          </p>
+          <p>
+            With great walkability and proximity to shops, restaurants and
+            parks, our homes are ideally located to take advantage of all Denver
+            has to offer.
+          </p>
           <p>Explore the site to discover more about your community.</p>
         </div>
       </div>
     </div>
-    <router-view :currentUserRole="currentUserRole" />
+    <router-view :current-user-role="currentUserRole" />
     <nav>
       <router-link to="/app/neighbors">Neighbors</router-link>
       <router-link to="/app/events">Events</router-link>
@@ -24,15 +34,15 @@
 
 <script>
 export default {
-  name: "default",
+  name: "Default",
   props: {
-    currentUserRole: String
+    currentUserRole: String,
   },
   data() {
     return {
-      secondaryNavOpen: false
+      secondaryNavOpen: false,
     };
-  }
+  },
 };
 </script>
 

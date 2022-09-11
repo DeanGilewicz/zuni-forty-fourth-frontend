@@ -2,58 +2,84 @@
   <div>
     <h2>ADD EVENT</h2>
     <div class="container-form">
-      <form action method="post" @submit.prevent="addEventConfirmationModal" class="form__event">
+      <form
+        action
+        method="post"
+        class="form__event"
+        @submit.prevent="addEventConfirmationModal"
+      >
         <div class="field">
-          <input v-model="name" type="text" id="eName" name="name" required />
+          <input id="eName" v-model="name" type="text" name="name" required />
           <label for="eName" :class="{ active: isEventName }">
             Event Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="cost" type="text" id="cost" name="cost" required />
+          <input id="cost" v-model="cost" type="text" name="cost" required />
           <label for="cost" :class="{ active: isEventCost }">
             Cost
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <datetime type="datetime" v-model="start" :minute-step="15"></datetime>
+          <datetime
+            v-model="start"
+            type="datetime"
+            :minute-step="15"
+          ></datetime>
           <label for="start" :class="{ active: isEventStart }">
             Start Day / Time
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <datetime type="datetime" v-model="end" :minute-step="15" :min-datetime="start"></datetime>
+          <datetime
+            v-model="end"
+            type="datetime"
+            :minute-step="15"
+            :min-datetime="start"
+          ></datetime>
           <label for="end" :class="{ active: isEventEnd }">
             End Day / Time
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="address" type="text" id="address" name="address" required />
+          <input
+            id="address"
+            v-model="address"
+            type="text"
+            name="address"
+            required
+          />
           <label for="address" :class="{ active: isEventAddress }">
             Address
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="city" type="text" id="city" name="city" required />
+          <input id="city" v-model="city" type="text" name="city" required />
           <label for="city" :class="{ active: isEventCity }">
             City
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="state" type="text" id="state" name="state" required />
+          <input id="state" v-model="state" type="text" name="state" required />
           <label for="state" :class="{ active: isEventState }">
             State
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="zipCode" type="text" id="zipCode" name="zipCode" required />
+          <input
+            id="zipCode"
+            v-model="zipCode"
+            type="text"
+            name="zipCode"
+            required
+          />
           <label for="zipCode" :class="{ active: isEventZip }">
             Zip
             <sup>*</sup>
@@ -76,7 +102,10 @@ import { Datetime } from "vue-datetime";
 import axios from "axios";
 
 export default {
-  name: "addEvent",
+  name: "AddEvent",
+  components: {
+    Datetime,
+  },
   data() {
     return {
       address: "",
@@ -86,7 +115,7 @@ export default {
       name: "",
       start: "",
       state: "",
-      zipCode: ""
+      zipCode: "",
     };
   },
   computed: {
@@ -137,7 +166,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     showAllEvents() {
@@ -158,7 +187,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.addEvent.bind(this),
-          cancelFn: this.resetForm.bind(this)
+          cancelFn: this.resetForm.bind(this),
         });
       } else {
         HandleError({ message: "Please complete all fields" });
@@ -174,7 +203,7 @@ export default {
       this.state = "";
       this.zipCode = "";
     },
-    addEvent(e) {
+    addEvent() {
       const url = "/api/event/create";
       const axiosData = {
         address: this.address,
@@ -184,17 +213,17 @@ export default {
         name: this.name,
         start: this.start,
         state: this.state,
-        zipCode: this.zipCode
+        zipCode: this.zipCode,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .post(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           // update vue modal with additional event
           this.$emit("updateVueEventModel", response.data.result);
           // reset vue form model
@@ -206,12 +235,9 @@ export default {
             `The ${response.data.result.name} event has been created`
           );
         })
-        .catch(error => HandleError(error));
-    }
+        .catch((error) => HandleError(error));
+    },
   },
-  components: {
-    Datetime
-  }
 };
 </script>
 

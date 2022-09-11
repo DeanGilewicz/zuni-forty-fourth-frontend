@@ -2,23 +2,44 @@
   <div>
     <h2>EDIT EVENT</h2>
     <div class="container-form">
-      <form action method="post" @submit.prevent="updateEventConfirmationModal" class="form__event">
+      <form
+        action
+        method="post"
+        class="form__event"
+        @submit.prevent="updateEventConfirmationModal"
+      >
         <div class="field">
-          <input v-model="theEvent.name" type="text" id="eName" name="name" required />
+          <input
+            id="eName"
+            v-model="theEvent.name"
+            type="text"
+            name="name"
+            required
+          />
           <label for="eName" :class="{ active: isEventName }">
             Event Name
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="theEvent.cost" type="text" id="cost" name="cost" required />
+          <input
+            id="cost"
+            v-model="theEvent.cost"
+            type="text"
+            name="cost"
+            required
+          />
           <label for="cost" :class="{ active: isEventCost }">
             Cost
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <datetime type="datetime" v-model="formattedStartDateTime" :minute-step="15"></datetime>
+          <datetime
+            v-model="formattedStartDateTime"
+            type="datetime"
+            :minute-step="15"
+          ></datetime>
           <label for="start" class="active">
             Start Day / Time
             <sup>*</sup>
@@ -26,8 +47,8 @@
         </div>
         <div class="field">
           <datetime
-            type="datetime"
             v-model="formattedEndDateTime"
+            type="datetime"
             :minute-step="15"
             :min-datetime="formattedStartDateTime"
           ></datetime>
@@ -37,28 +58,52 @@
           </label>
         </div>
         <div class="field">
-          <input v-model="theEvent.address" type="text" id="address" name="address" required />
+          <input
+            id="address"
+            v-model="theEvent.address"
+            type="text"
+            name="address"
+            required
+          />
           <label for="address" :class="{ active: isEventAddress }">
             Street Address
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="theEvent.city" type="text" id="city" name="city" required />
+          <input
+            id="city"
+            v-model="theEvent.city"
+            type="text"
+            name="city"
+            required
+          />
           <label for="city" :class="{ active: isEventCity }">
             City
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="theEvent.state" type="text" id="state" name="state" required />
+          <input
+            id="state"
+            v-model="theEvent.state"
+            type="text"
+            name="state"
+            required
+          />
           <label for="state" :class="{ active: isEventState }">
             State
             <sup>*</sup>
           </label>
         </div>
         <div class="field">
-          <input v-model="theEvent.zipCode" type="text" id="zipCode" name="zipCode" required />
+          <input
+            id="zipCode"
+            v-model="theEvent.zipCode"
+            type="text"
+            name="zipCode"
+            required
+          />
           <label for="zipCode" :class="{ active: isEventZip }">
             Zip
             <sup>*</sup>
@@ -82,14 +127,17 @@ import HandleLocalDateTime from "../utils/handleLocalDateTime";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "editEvent",
+  name: "EditEvent",
+  components: {
+    Datetime,
+  },
   props: {
-    event: Object
+    event: Object,
   },
   data() {
     return {
       theEvent: this.event,
-      rollbackEvent: { ...this.event }
+      rollbackEvent: { ...this.event },
     };
   },
   computed: {
@@ -99,7 +147,7 @@ export default {
       },
       set(newValue) {
         this.theEvent.start = HandleLocalDateTime(newValue);
-      }
+      },
     },
     formattedEndDateTime: {
       get() {
@@ -107,7 +155,7 @@ export default {
       },
       set(newValue) {
         this.theEvent.end = HandleLocalDateTime(newValue);
-      }
+      },
     },
     isEventName() {
       if (this.theEvent.name !== "") {
@@ -144,7 +192,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     showAllEvents() {
@@ -167,7 +215,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.updateEvent.bind(this),
-          cancelFn: this.resetEvent.bind(this)
+          cancelFn: this.resetEvent.bind(this),
         });
       } else {
         HandleError({ message: "Please complete all fields" });
@@ -179,17 +227,17 @@ export default {
     updateEvent() {
       const url = "/api/event/update";
       const axiosData = {
-        event: this.theEvent
+        event: this.theEvent,
       };
       const axiosConfig = {
         crossDomain: true,
-        withCredentials: true
+        withCredentials: true,
       };
       // Start Loader
       EventBus.$emit("START_LOADING");
       axios
         .put(url, axiosData, axiosConfig)
-        .then(response => {
+        .then((response) => {
           // update vue modal with additional event
           this.$emit("updateVueEvent", response.data.result);
           // UI success message
@@ -197,12 +245,9 @@ export default {
             `The ${response.data.result.name} event has been updated`
           );
         })
-        .catch(error => HandleError(error));
-    }
+        .catch((error) => HandleError(error));
+    },
   },
-  components: {
-    Datetime
-  }
 };
 </script>
 

@@ -6,14 +6,14 @@
       <form
         action
         method="post"
-        @submit.prevent="changeUserPasswordConfirmationModal"
         class="form_change_password"
+        @submit.prevent="changeUserPasswordConfirmationModal"
       >
         <div class="field">
           <input
+            id="currentPassword"
             v-model="currentPassword"
             type="password"
-            id="currentPassword"
             name="current_password"
             required
           />
@@ -24,9 +24,9 @@
         </div>
         <div class="field">
           <input
+            id="newPassword"
             v-model="newPassword"
             type="password"
-            id="newPassword"
             name="new_password"
             required
           />
@@ -37,9 +37,9 @@
         </div>
         <div class="field">
           <input
+            id="confirmPassword"
             v-model="confirmPassword"
             type="password"
-            id="confirmPassword"
             name="confirm_password"
             required
           />
@@ -63,12 +63,12 @@ import HandleSuccess from "../utils/handleSuccess";
 import axios from "axios";
 
 export default {
-  name: "changePassword",
+  name: "ChangePassword",
   data() {
     return {
       currentPassword: "",
       newPassword: "",
-      confirmPassword: ""
+      confirmPassword: "",
     };
   },
   computed: {
@@ -92,13 +92,13 @@ export default {
     },
     passwordsMatch() {
       return this.newPassword === this.confirmPassword;
-    }
+    },
   },
   methods: {
     changeUserPasswordConfirmationModal() {
       if (
-        typeof this.currentPassword !== "" &&
-        typeof this.newPassword !== "" &&
+        this.currentPassword !== "" &&
+        this.newPassword !== "" &&
         this.confirmPassword !== ""
       ) {
         if (!this.passwordsMatch) {
@@ -109,7 +109,7 @@ export default {
         EventBus.$emit("OPEN_CONFIRMATION_MODAL", {
           message,
           confirmFn: this.changeUserPassword.bind(this),
-          cancelFn: this.resetForm.bind(this)
+          cancelFn: this.resetForm.bind(this),
         });
       } else {
         // handle UI validation messages
@@ -122,21 +122,21 @@ export default {
         const axiosData = {
           password: this.currentPassword,
           newPassword: this.newPassword,
-          confirmPassword: this.confirmPassword
+          confirmPassword: this.confirmPassword,
         };
         const axiosConfig = {
           crossDomain: true,
-          withCredentials: true
+          withCredentials: true,
         };
         // Start Loader
         EventBus.$emit("START_LOADING");
         axios
           .put(url, axiosData, axiosConfig)
-          .then(response => {
+          .then(() => {
             // UPDATE UI
             HandleSuccess("Password has been successfully updated");
           })
-          .catch(error => HandleError(error));
+          .catch((error) => HandleError(error));
       } else {
         HandleError({ message: "Password cannot be empty" });
       }
@@ -145,8 +145,8 @@ export default {
       this.currentPassword = "";
       this.newPassword = "";
       this.confirmPassword = "";
-    }
-  }
+    },
+  },
 };
 </script>
 

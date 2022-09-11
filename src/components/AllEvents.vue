@@ -5,22 +5,26 @@
       <li v-for="event in events" :key="event.id" class="container-event">
         <div class="event-info">
           <div class="event-times">
-            <p>{{formatDate(event.start)}} {{formatTime(event.start)}}</p>
-            <p>{{formatDate(event.end)}} {{formatTime(event.end)}}</p>
-            <p>{{(event.cost === 0) ? 'Free' : '$' + event.cost}}</p>
+            <p>{{ formatDate(event.start) }} {{ formatTime(event.start) }}</p>
+            <p>{{ formatDate(event.end) }} {{ formatTime(event.end) }}</p>
+            <p>{{ event.cost === 0 ? "Free" : "$" + event.cost }}</p>
           </div>
           <div class="event-address">
-            <h4>{{event.name}}</h4>
-            <p>{{event.address}}</p>
-            <p>{{event.city}}, {{event.state}} {{event.zipCode}}</p>
+            <h4>{{ event.name }}</h4>
+            <p>{{ event.address }}</p>
+            <p>{{ event.city }}, {{ event.state }} {{ event.zipCode }}</p>
           </div>
         </div>
         <div v-if="currentUserRole === 'Admin'" class="admin-only">
           <div class="btn-edit-container">
-            <button class="btn-edit" @click="onEditEvent(event)">Edit Event</button>
+            <button class="btn-edit" @click="onEditEvent(event)">
+              Edit Event
+            </button>
           </div>
           <div class="btn-delete-container">
-            <button class="btn-delete" @click="onDeleteEvent(event)">Delete Event</button>
+            <button class="btn-delete" @click="onDeleteEvent(event)">
+              Delete Event
+            </button>
           </div>
         </div>
       </li>
@@ -29,13 +33,11 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
-  name: "allEvents",
+  name: "AllEvents",
   props: {
     events: Array,
-    currentUserRole: String
+    currentUserRole: String,
   },
   methods: {
     onEditEvent(event) {
@@ -72,12 +74,12 @@ export default {
           "September",
           "October",
           "November",
-          "December"
+          "December",
         ];
         return `${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()}`;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
