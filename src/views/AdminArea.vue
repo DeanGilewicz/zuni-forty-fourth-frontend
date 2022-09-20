@@ -59,7 +59,7 @@ import AddUser from "@/components/AddUser.vue";
 import EditUser from "@/components/EditUser.vue";
 
 export default {
-  name: "AdminArea",
+  name: "AdminAreaView",
   components: {
     AllProperties,
     AddOwner,

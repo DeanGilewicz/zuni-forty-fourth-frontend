@@ -8,7 +8,7 @@
 import ForgotPasswordReset from "@/components/ForgotPasswordReset.vue";
 
 export default {
-  name: "ForgotPasswordReset",
+  name: "ForgotPasswordResetView",
   components: {
     ForgotPasswordReset,
   },

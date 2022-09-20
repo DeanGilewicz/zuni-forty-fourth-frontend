@@ -50,7 +50,7 @@ import Cookie from "js-cookie";
 import jwtDecode from "../utils/jwtDecode";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "ManageUsers",
+  name: "ManageUsersView",
   components: {
     AddUserByOwner,
   },

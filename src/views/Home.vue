@@ -47,7 +47,7 @@ import axios from "axios";
 import Cookie from "js-cookie";
 import jwtDecode from "../utils/jwtDecode";
 export default {
-  name: "Home",
+  name: "HomeView",
   data() {
     return {
       currentUserRole: jwtDecode(Cookie.get("token")).role,

@@ -14,7 +14,7 @@
 import ForgotPassword from "@/components/ForgotPassword.vue";
 
 export default {
-  name: "ForgotPassword",
+  name: "ForgotPasswordView",
   components: {
     ForgotPassword,
   },
