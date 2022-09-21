@@ -101,7 +101,7 @@ import { formatPhoneNumber } from "../utils/formatters";
 import axios from "axios";
 
 export default {
-  name: "Neighbors",
+  name: "NeighborsView",
   components: {},
   data() {
     return {

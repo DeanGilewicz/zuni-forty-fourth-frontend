@@ -45,7 +45,7 @@ import AddEvent from "../components/AddEvent";
 import EditEvent from "@/components/EditEvent.vue";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "Events",
+  name: "EventsView",
   components: {
     AllEvents,
     AddEvent,

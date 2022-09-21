@@ -45,7 +45,7 @@ import AddCompany from "@/components/AddCompany.vue";
 import EditCompany from "@/components/EditCompany.vue";
 import { capitalizeFirstLetter } from "../utils/formatters";
 export default {
-  name: "Contacts",
+  name: "ContactsView",
   components: {
     AllCompanies,
     AddCompany,
