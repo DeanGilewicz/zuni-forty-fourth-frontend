@@ -2,6 +2,6 @@
 # heroku
 # /api/*	https://zuni-forty-fourth-api.herokuapp.com/api/:splat  200
 # digital ocean
-/api/*	https://api.zunifortyfourth.com/api/:splat  200
+/api/*	https://zunifortyfourthbe.fly.dev/api/:splat  200
 # Netlify settings for single-page application
 /*			/index.html   200
